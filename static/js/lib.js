@@ -2,7 +2,7 @@ var Backend = {};
 Backend.Api = function(version){
 
     var version = version || 'v1.0',
-    baseUrl = 'http://selfies.tuvok.nl',
+    baseUrl = 'http://selfies.tuvok.nl/api',
     defaults = { xhrFields: {withCredentials: true}, contentType: 'application/x-www-form-urlencoded', type: 'GET', success: function(data, status, xhr){console.info('API request ' + xhr.status + " " + xhr.statusText + " Bytes: " + xhr.response.length);}, error: function(xhr, errorType, error){alert('XHR call failed...');}},
     get = function(uri, r){
         request( prepareRequest(uri, r, 'GET') );
