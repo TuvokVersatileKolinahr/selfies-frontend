@@ -1,4 +1,4 @@
 selfies-frontend
 ================
 
-The selfie service client with javascript
+The selfie service client with javascript.
