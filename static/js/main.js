@@ -21,8 +21,7 @@ document.addEventListener('DOMContentLoaded', function () {
 			  data: { 
 			  	selfies: data,
 			  	getSrc: function(selfie){
-			  		var rand = Math.random();
-			  		return selfie.picture + "?" + rand;
+			  		return selfie.picture + "?" + selfie._id;
 			  	}
 			  }
 			});
