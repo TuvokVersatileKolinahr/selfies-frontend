@@ -18,7 +18,13 @@ document.addEventListener('DOMContentLoaded', function () {
 			 ractive = new Ractive({
 			  el: '#selfies',
 			  template: '#selfiestpl',
-			  data: { selfies: data }
+			  data: { 
+			  	selfies: data,
+			  	getSrc: function(selfie){
+			  		var rand = Math.random();
+			  		return selfie.picture + "?" + rand;
+			  	}
+			  }
 			});
 
 			ractive.on('flip', function(arg){
