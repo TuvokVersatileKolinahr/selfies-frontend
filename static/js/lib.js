@@ -49,14 +49,29 @@ Backend.Api = function(version){
 
         http.onreadystatechange = function() {//Call a function when the state changes.
             if(http.readyState == 4 && http.status == 200) {
-                r.success(http.responseText, http.status, http);
+                r.success( decode(http), http.status, http);
             }
             else if(http.readyState == 4) {
-                r.error(http.responseText, http.status, http);
+                r.error( decode(http), http.status, http);
             }
         }
         http.send();
     };
+
+    /**
+     * Encodes the response into the right format
+     *
+     * @param XmlHttpRequest the ajax request object
+     * 
+     * @return string|object The encoded response depending on the content type, eg. application/json delivers a JSON object, text/html returns a string
+     */
+    function decode(xhr){
+        var response = xhr.responseText;
+        if (xhr.getResponseHeader('content-type').match(/json/)){
+            response = JSON.parse(response);
+        }
+        return response;
+    }
 
     return {
         get : get,

@@ -11,10 +11,32 @@
 	<body>
 
 		<header></header>
-		<section></section>
+		<section id="selfies" class="clearfix">
+			
+		</section>
 		<footer></footer>
 
+
+		<script id="selfiestpl" type="text/ractive">
+		  {{#each selfies}}
+		  	<div class="selfie">
+		  		<div class="card">
+			  		<div class="front">
+			  			<h2 class="handle">{{name}}</h2>
+			  			<img src="{{picture}}" alt="Selfie {{name}}" />
+			  		</div>
+			  		<div class="back">
+			  			<h2 class="handle"></h2>
+			  			<p class="about">{{about}}</p>
+			  		</div>
+			  	</div>
+		  	</div>
+		  {{/each}}
+		</script>
+
+		<script src='http://cdn.ractivejs.org/latest/ractive.js'></script> 
 		<script src="static/js/lib.js"></script>
 		<script src="static/js/main.js"></script>
+
 	</body>
 </html>
