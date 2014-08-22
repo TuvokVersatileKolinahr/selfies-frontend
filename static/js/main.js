@@ -20,14 +20,10 @@ document.addEventListener('DOMContentLoaded', function () {
 			  template: '#selfiestpl',
 			  data: { selfies: data }
 			});
+
+			ractive.on('flip', function(arg){
+				arg.node.querySelector('.card').classList.toggle('flipped');
+			});
 		}
 	});
-
-	// cards layout
-	document.addEventListener('click', function(e){
-		var list = e.target.classList
-		if (list.contains('handle')){
-			e.target.parentNode.parentNode.classList.toggle('flipped');
-		}
-	}, false);
 });

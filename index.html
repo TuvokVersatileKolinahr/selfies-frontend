@@ -19,7 +19,7 @@
 
 		<script id="selfiestpl" type="text/ractive">
 		  {{#each selfies}}
-		  	<div class="selfie">
+		  	<div class="selfie" on-tap="flip">
 		  		<div class="card">
 			  		<div class="front">
 			  			<h2 class="handle">{{name}}</h2>
@@ -35,6 +35,7 @@
 		</script>
 
 		<script src='http://cdn.ractivejs.org/latest/ractive.js'></script> 
+		<script src="static/js/ractive-events-tap.js"></script>
 		<script src="static/js/lib.js"></script>
 		<script src="static/js/main.js"></script>
 
