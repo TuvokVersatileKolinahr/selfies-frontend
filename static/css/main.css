@@ -32,7 +32,7 @@ h1.title{
 }
 html, body, .wrapper, .wrapper .left, .wrapper .right{
   height: 100%;
-  overflow: auto;
+  overflow: hidden;
   width: 100%;
 }
 .wrapper {
@@ -43,15 +43,23 @@ html, body, .wrapper, .wrapper .left, .wrapper .right{
 .wrapper .left, .wrapper .right{
   position: absolute;
   width: 50%;
+  transition: all .6s ease-in-out 0s;
 }
 .wrapper .left{
   background: #fff;
   box-shadow: 2px 0 4px 0 #4C180D;
+  left: 0;
   opacity: .8;
 }
 .wrapper .right{
   background: rgba(66,19,9, .5);
   right: 0;
+}
+.wrapper.open-sesame .left{
+  left: -300px;
+}
+.wrapper.open-sesame .right{
+  right: -300px;
 }
 section#selfies{
   margin:0 auto;

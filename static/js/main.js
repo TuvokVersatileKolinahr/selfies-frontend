@@ -31,4 +31,8 @@ document.addEventListener('DOMContentLoaded', function () {
 			});
 		}
 	});
+
+	document.querySelector('.title').addEventListener('click', function(e){
+		document.querySelector('.wrapper').classList.toggle('open-sesame');
+	}, false);
 });
