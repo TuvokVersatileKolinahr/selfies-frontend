@@ -159,10 +159,16 @@ section.add .step1, section.add .step2{
   visibility: visible;
 }
 section.add video{
+  height: 773px;
   width: 580px;
 }
-section.add .screenshot{
-  display: none;
+section.add canvas{
+  height: 773px;
+  width: 580px;
+}
+section.add img{
+  height: 773px;
+  width: 580px;
 }
 section.add .group{
   padding: 10px 0;
@@ -220,22 +226,13 @@ section.add .group.buttons .cancel{
   text-decoration: none;
   transition: all .3s ease-in-out 0s;
 }
+
 section.add .group.buttons .cancel:hover{
   color: #6B0705;
 }
 
 .hidden {
   display: none;
-}
-
-canvas.selfiecontainer {
-  height: 480px;
-  width: 640px;
-}
-
-img.selfiecontainer {
-  height: 480px;
-  width: 640px;
 }
 
 .clearfix:after {

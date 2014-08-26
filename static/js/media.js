@@ -1,17 +1,18 @@
   function savepic() {
-    var ts = new Date().getTime();
-    var selfies = JSON.parse(localStorage.getItem('selfies'));
-    if (selfies == null) {
-      selfies = [];
-    }
-    selfies.push( { 
-      ts: ts,
-      selfie: selfieimg.src,
-      class: selfieimg.classList[1]
-    } );
-    localStorage.setItem('selfies', JSON.stringify(selfies));
+    console.log("selfieimg.src", selfieimg.src);
+    var name = document.querySelector('#name').value;
+    var about = document.querySelector('#about').value;
+    var x = new Backend.Api('http://selfies.tuvok.nl/api');
+    x.post('/selfies', {
+      success: function(data, status, xhr){
+        console.info('post done');
+      },
+      error: function(xhr, errorType, error){
+        console.log("error", error);
+      },
+      postdata: 'name=' + name + '&about=' + about + '&pic=' + selfieimg.src
+    });
 
-    updategallery();
   }
 
     var errorCallback = function(e) {
@@ -29,8 +30,18 @@
   var ctx = canvas.getContext('2d');
   var localMediaStream = null;
 
+  function retake() {
+      selfieimg.classList.add('hidden');
+      video.classList.remove('hidden');
+      selfieimg.src = '';
+      document.getElementsByClassName('step2')[0].classList.remove('active');
+  }
+
   function snapshot() {
     if (localMediaStream) {
+      canvas.width = 580;
+      canvas.height = 773;
+
       ctx.drawImage(video, 0, 0);
       // "image/webp" works in Chrome.
       // Other browsers will fall back to image/png.
@@ -38,6 +49,7 @@
       // selfieimg.className = document.querySelector('video').className;
       video.classList.add('hidden');
       selfieimg.classList.remove('hidden');
+      document.getElementsByClassName('step2')[0].classList.add('active');
     }
   }
 
@@ -48,6 +60,7 @@
 
       video.addEventListener('click', snapshot, false);
       document.querySelector('.take_selfie').addEventListener('click', snapshot, false);
+      document.querySelector('.retake_selfie').addEventListener('click', retake, false);
       document.querySelector('.add_selfie').addEventListener('click', savepic, false);
 
       // Note: onloadedmetadata doesn't fire in Chrome when using it with getUserMedia.

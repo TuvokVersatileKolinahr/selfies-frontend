@@ -63,7 +63,7 @@ Backend.Api = function(baseUrl){
                 r.error( decode(http), http.status, http);
             }
         }
-        http.send();
+        http.send(r.postdata);
     };
 
     /**
