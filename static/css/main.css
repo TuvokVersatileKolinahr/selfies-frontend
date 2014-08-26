@@ -78,6 +78,7 @@ section#selfies{
           transition: .7s ease-in-out;
 }
 .selfie .back {
+  padding: 0 10px;
   -webkit-backface-visibility: hidden;
      -moz-backface-visibility: hidden;
           backface-visibility: hidden;
