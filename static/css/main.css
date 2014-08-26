@@ -218,7 +218,19 @@ section.add .group.buttons .cancel:hover{
   color: #6B0705;
 }
 
+.hidden {
+  display: none;
+}
 
+canvas.selfiecontainer {
+  height: 480px;
+  width: 640px;
+}
+
+img.selfiecontainer {
+  height: 480px;
+  width: 640px;
+}
 
 .clearfix:after {
   clear: both;

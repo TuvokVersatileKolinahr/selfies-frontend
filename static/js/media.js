@@ -6,8 +6,8 @@
     }
     selfies.push( { 
       ts: ts,
-      selfie: document.querySelector('#mugshot').src,
-      class: document.querySelector('#mugshot').classList[1]
+      selfie: selfieimg.src,
+      class: selfieimg.classList[1]
     } );
     localStorage.setItem('selfies', JSON.stringify(selfies));
 
@@ -25,6 +25,7 @@
 
   var video = document.querySelector('video');
   var canvas = document.querySelector('canvas');
+  var selfieimg = document.querySelector('#selfie');
   var ctx = canvas.getContext('2d');
   var localMediaStream = null;
 
@@ -33,8 +34,10 @@
       ctx.drawImage(video, 0, 0);
       // "image/webp" works in Chrome.
       // Other browsers will fall back to image/png.
-      document.querySelector('#mugshot').src = canvas.toDataURL('image/png');
-      document.querySelector('#mugshot').className = document.querySelector('video').className;
+      selfieimg.src = canvas.toDataURL('image/png');
+      // selfieimg.className = document.querySelector('video').className;
+      video.classList.add('hidden');
+      selfieimg.classList.remove('hidden');
     }
   }
 
