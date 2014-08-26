@@ -158,6 +158,12 @@ section.add .step1, section.add .step2{
 .open-sesame section.add .step1.active, .open-sesame section.add .step2.active{
   visibility: visible;
 }
+section.add video{
+  width: 580px;
+}
+section.add .screenshot{
+  display: none;
+}
 section.add .group{
   padding: 10px 0;
 }
