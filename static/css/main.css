@@ -127,6 +127,7 @@ section#selfies{
   opacity: 0;
 }
 .selfie.flipped .back {
+  background: rgba(255,255,255,.6);
   -webkit-transform: perspective(800px) rotateY(0);
      -moz-transform: perspective(800px) rotateY(0);
           transform: perspective(800px) rotateY(0);
