@@ -9,7 +9,7 @@
  */
 document.addEventListener('DOMContentLoaded', function () {
 
-	var x = new Backend.Api(), ractive;
+	var x = new Backend.Api('http://selfies.tuvok.nl/api'), ractive;
 
 	// get all selfies
 	x.get('/selfies', {
