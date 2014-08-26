@@ -9,30 +9,34 @@
  */
 document.addEventListener('DOMContentLoaded', function () {
 
-	var x = new Backend.Api('http://selfies.tuvok.nl/api'), ractive;
-
-	// get all selfies
-	x.get('/selfies/12', {
-		success: function(data, status, xhr){
-			console.info('Got ' + data.length + ' selfies!');
-			 ractive = new Ractive({
+	var x = new Backend.Api('http://selfies.tuvok.nl/api'),
+	ractive = new Ractive({
 			  el: '#selfies',
 			  template: '#selfiestpl',
 			  data: { 
-			  	selfies: data,
+			  	selfies: {},
 			  	getSrc: function(selfie){
 			  		return selfie.picture + "?" + selfie._id;
 			  	}
 			  }
 			});
 
-			ractive.on('flip', function(arg){
-				arg.node.classList.toggle('flipped');
-			});
+	// get all selfies
+	x.get('/selfies/12', {
+		success: function(data, status, xhr){
+			console.info('Got ' + data.length + ' selfies!');
+			ractive.set('selfies', data);
 		}
 	});
 
-	document.querySelector('.title').addEventListener('click', function(e){
+	// EVENT handling
+	ractive.on('flip', function(arg){
+		arg.node.classList.toggle('flipped');
+	});
+
+	var openSesameHander = function(e){
 		document.querySelector('.wrapper').classList.toggle('open-sesame');
-	}, false);
+	}
+	document.querySelector('.title').addEventListener('mousedown', openSesameHander, false);
+	document.querySelector('.title').addEventListener('touchstart', openSesameHander, false);
 });
