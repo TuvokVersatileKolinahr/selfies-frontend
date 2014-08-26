@@ -34,9 +34,8 @@ document.addEventListener('DOMContentLoaded', function () {
 		arg.node.classList.toggle('flipped');
 	});
 
-	var openSesameHander = function(e){
+
+	document.querySelector('.title').addEventListener('mousedown', function(e){
 		document.querySelector('.wrapper').classList.toggle('open-sesame');
-	}
-	document.querySelector('.title').addEventListener('mousedown', openSesameHander, false);
-	document.querySelector('.title').addEventListener('touchstart', openSesameHander, false);
+	}, false);
 });
