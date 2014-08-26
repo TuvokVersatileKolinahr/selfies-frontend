@@ -1,3 +1,6 @@
+/**
+ * Main object to make backend calls
+ */
 var Backend = {};
 /**
  * Backend.Api makes it possible to make calls to a backend in a simplified manner. It gives supplies defaults for GET, POST, PUT, PATCH and DELETE requests
