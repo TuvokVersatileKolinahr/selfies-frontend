@@ -20,16 +20,14 @@
 		<script id="selfiestpl" type="text/ractive">
 		  {{#each selfies}}
 		  	<div class="selfie" on-tap="flip">
-		  		<div class="card">
-			  		<div class="front">
-			  			<h2 class="handle">{{name}}</h2>
-			  			<img src="{{getSrc(this)}}" alt="Selfie {{name}}" />
-			  		</div>
-			  		<div class="back">
-			  			<h2 class="handle"></h2>
-			  			<p class="about">{{about}}</p>
-			  		</div>
-			  	</div>
+		  		<div class="back">
+		  			<h2 class="handle"></h2>
+		  			<p class="about">{{about}}</p>
+		  		</div>
+		  		<div class="front">
+		  			<h2 class="handle">{{name}}</h2>
+		  			<img src="{{getSrc(this)}}" alt="Selfie {{name}}" />
+		  		</div>
 		  	</div>
 		  {{/each}}
 		</script>

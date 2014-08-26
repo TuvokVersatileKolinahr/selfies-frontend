@@ -19,67 +19,76 @@ img{max-width:100%;}
     font-family: "Open Sans";
     src: local("Open Sans Light"), local("OpenSans-Light"), url("fonts/OpenSans-Light.woff") format("woff");
 }
-
 body{
 	font: 1em "Open Sans",Helvetica,Arial,sans-serif;
 }
 
-.selfie { 
-  border: 1px solid #999;
+.selfie{
   float: left;
   height: 260px;
   margin: 5px;
-  perspective: 800px;
   position: relative;
   width: 200px;
 }
+.selfie .back, .selfie .front {
+  border: 1px solid #999;
+  height: 100%;
+  left:0;
+  padding: 0 10px;
+  position:absolute; 
+  top:0; 
+  width:100%; 
+  -webkit-transition: .7s ease-in-out;
+     -moz-transition: .7s ease-in-out;
+      -ms-transition: .7s ease-in-out;
+       -o-transition: .7s ease-in-out;
+          transition: .7s ease-in-out;
+}
+.selfie .back {
+  -webkit-backface-visibility: hidden;
+     -moz-backface-visibility: hidden;
+          backface-visibility: hidden;
+  -webkit-transform: perspective(800px) rotateY(180deg);
+    -moz-transform: perspective(800px) rotateY(180deg);
+         transform: perspective(800px) rotateY(180deg);
+}
+.selfie .front {
+  -webkit-backface-visibility: visible;
+     -moz-backface-visibility: visible;
+          backface-visibility: visible;
+  -webkit-transform: perspective(800px) rotateY(0deg);
+     -moz-transform: perspective(800px) rotateY(0deg);
+          transform: perspective(800px) rotateY(0deg);
+}
+.selfie .front img {
+  border:1px solid #fff;
+}
 .selfie h2{
-	background: #fff;
-	font-size: 1.2em;
-	height: 47px;
-	overflow: hidden;
-	padding: 10px 5px;
-	text-align:center;
-	text-overflow: ellipsis;
-	white-space: nowrap;
+  background: #fff;
+  font-size: 1.2em;
+  height: 47px;
+  overflow: hidden;
+  padding: 10px 5px;
+  text-align:center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .selfie .handle{
-	cursor: pointer;
+  cursor: pointer;
 }
 .selfie .back .handle{
   opacity: 0;
 }
-/* CARD Layout for selfie */ 
-.card {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  transform-style: preserve-3d;
-  transition: transform 1s;
-  transform-origin: right center;
+.selfie.flipped .back {
+  -webkit-transform: perspective(800px) rotateY(0);
+     -moz-transform: perspective(800px) rotateY(0);
+          transform: perspective(800px) rotateY(0);
 }
-.card .front, .card .back {
-  display: block;
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  backface-visibility: hidden;
-}
-.card .front {
-  text-align:center;
-}
-.card .back {
-  overflow: hidden;
-  transform: rotateY( 180deg );
-}
-.card .about{
-	margin: 0 5px 5px;
-}
-.card.flipped {
-  transform: translateX( -100% ) rotateY( -180deg );
-}
-.card.flipped .front{
-	opacity: .2;
+.selfie.flipped .front {
+  opacity: 0.15;
+  -webkit-transform: perspective(800px) rotateY(-179.9deg);
+     -moz-transform: perspective(800px) rotateY(-179.9deg);
+          transform: perspective(800px) rotateY(-179.9deg);
 }
 
 .clearfix:after {

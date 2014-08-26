@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', function () {
 			});
 
 			ractive.on('flip', function(arg){
-				arg.node.querySelector('.card').classList.toggle('flipped');
+				arg.node.classList.toggle('flipped');
 			});
 		}
 	});
