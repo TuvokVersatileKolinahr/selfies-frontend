@@ -19,11 +19,12 @@ img{max-width:100%;}
     font-family: "Open Sans";
     src: local("Open Sans Light"), local("OpenSans-Light"), url("fonts/OpenSans-Light.woff") format("woff");
 }
-body{
+body, textarea{
 	font: 1em "Open Sans",Helvetica,Arial,sans-serif;
 }
 h1.title{
   color: #4C180D;
+  cursor: pointer;
   font-size: 3em;
   position: relative;
   top: 50%;
@@ -39,11 +40,13 @@ html, body, .wrapper, .wrapper .left, .wrapper .right{
     background-image: url("img/background.jpg");
     background-position: center top;
     background-size: cover;
+    z-index: 1;
 }
 .wrapper .left, .wrapper .right{
   position: absolute;
   width: 50%;
   transition: all .6s ease-in-out 0s;
+  z-index: 3;
 }
 .wrapper .left{
   background: #fff;
@@ -53,6 +56,7 @@ html, body, .wrapper, .wrapper .left, .wrapper .right{
 }
 .wrapper .right{
   background: rgba(66,19,9, .5);
+  overflow-y: scroll;
   right: 0;
 }
 .wrapper.open-sesame .left{
@@ -135,13 +139,67 @@ html, body, .wrapper, .wrapper .left, .wrapper .right{
           transform: perspective(800px) rotateY(-179.9deg);
 }
 
+
+
+
+section.add{
+  margin: 0 10px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 100%;
+  z-index: 2;
+}
+section.add .group{
+  padding: 10px 0;
+}
+section.add .group:after{
+  clear: both;
+  content: ".";
+  display: block;
+  height: 0;
+  line-height: 0;
+  visibility: hidden;
+}
+section.add .container{
+  margin: 0 auto;
+  width: 600px;
+}
+section.add label{
+  color: #fff;
+  display: block;
+  float: left;
+  font-size: 1.2em;
+  font-weight: bold;
+  width: 150px;
+}
+section.add .input{
+  font-size: 1.2em;
+  padding: 5px 10px;
+  width: 405px;
+}
+section.add textarea.input{
+  height: 175px;
+  resize: vertical;
+}
+section.add .group.buttons{
+  padding: 10px 20px;
+  text-align: right;
+}
+section.add .group.buttons .cancel{
+  font-size: 1.2em;
+  
+}
+
+
+
 .clearfix:after {
-    clear: both;
-    content: ".";
-    display: block;
-    height: 0;
-    line-height: 0;
-    visibility: hidden;
+  clear: both;
+  content: ".";
+  display: block;
+  height: 0;
+  line-height: 0;
+  visibility: hidden;
 }
 
 

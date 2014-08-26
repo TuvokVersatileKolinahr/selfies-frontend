@@ -1,5 +1,5 @@
 /*
- * Selfi data format
+ * Selfi data format:
  * _id      string
  * about    string
  * isActive boolean
