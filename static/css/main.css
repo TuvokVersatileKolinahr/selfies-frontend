@@ -22,14 +22,42 @@ img{max-width:100%;}
 body{
 	font: 1em "Open Sans",Helvetica,Arial,sans-serif;
 }
-
+h1.title{
+  color: #4C180D;
+  font-size: 3em;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  text-align: center;
+}
+html, body, .wrapper, .wrapper .left, .wrapper .right{
+  height: 100%;
+  overflow: auto;
+  width: 100%;
+}
+.wrapper {
+    background-image: url("img/background.jpg");
+    background-position: center top;
+    background-size: cover;
+}
+.wrapper .left, .wrapper .right{
+  position: absolute;
+  width: 50%;
+}
+.wrapper .left{
+  box-shadow: 2px 0 4px 0 #4C180D;
+  border-left:;
+  opacity: .8;
+}
+.wrapper .right{
+  right: 0;
+}
 section#selfies{
   margin:0 auto;
   max-width:840px
 }
-
 .selfie{
-  float: left;
+  float: right;
   height: 260px;
   margin: 5px;
   position: relative;
@@ -58,6 +86,7 @@ section#selfies{
          transform: perspective(800px) rotateY(180deg);
 }
 .selfie .front {
+  text-align: center;
   -webkit-backface-visibility: visible;
      -moz-backface-visibility: visible;
           backface-visibility: visible;
@@ -68,6 +97,9 @@ section#selfies{
 .selfie .front img {
   border: 1px solid #fff;
   border-radius: 50%;
+  box-shadow: 0 0 3px 2px rgba(255, 255, 255, 0.8);
+  margin-top: 20px;
+  width: 175px;
 }
 .selfie h2{
   background: #fff;
