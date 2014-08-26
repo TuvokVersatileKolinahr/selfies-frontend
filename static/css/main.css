@@ -23,6 +23,11 @@ body{
 	font: 1em "Open Sans",Helvetica,Arial,sans-serif;
 }
 
+section#selfies{
+  margin:0 auto;
+  max-width:840px
+}
+
 .selfie{
   float: left;
   height: 260px;
