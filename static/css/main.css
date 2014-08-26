@@ -61,10 +61,6 @@ html, body, .wrapper, .wrapper .left, .wrapper .right{
 .wrapper.open-sesame .right{
   right: -300px;
 }
-section#selfies{
-  margin:0 auto;
-  max-width:840px
-}
 .selfie{
   float: right;
   height: 260px;
