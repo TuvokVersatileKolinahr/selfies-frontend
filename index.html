@@ -19,6 +19,7 @@
 
 		<script id="selfiestpl" type="text/ractive">
 		  {{#each selfies}}
+		    {{#isActive}} {{!show only active selfies}}
 		  	<div class="selfie" on-tap="flip">
 		  		<div class="back">
 		  			<h2 class="handle"></h2>
@@ -29,6 +30,7 @@
 		  			<img src="{{getSrc(this)}}" alt="Selfie {{name}}" />
 		  		</div>
 		  	</div>
+		  	{{/isActive}}
 		  {{/each}}
 		</script>
 
