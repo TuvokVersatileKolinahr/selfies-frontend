@@ -66,7 +66,8 @@ section#selfies{
           transform: perspective(800px) rotateY(0deg);
 }
 .selfie .front img {
-  border:1px solid #fff;
+  border: 1px solid #fff;
+  border-radius: 50%;
 }
 .selfie h2{
   background: #fff;
