@@ -22,10 +22,12 @@
 		<section class="add">
 			<div class="container step1">
 				<div class="group">
-					<video id="mugshot"></video>
+					<video id="mugshot" autoplay loop></video>
+					<img id="screenshot" src="" class="screenshot" height="480" width="640">
+					<canvas style="display:none;" height="480" width="640"></canvas>
 				</div>
 				<div class="group buttons">
-					<a href="#" class="cancel">Take selfie</a>
+					<a href="#" class="cancel take_selfie">Take selfie</a>
 				</div>
 			</div>
 			<div class="container step2">
@@ -40,7 +42,7 @@
 				
 				<div class="group buttons">
 					<a href="#" class="cancel">Cancel</a>
-					<button class="add">Add Selfie</button>
+					<button class="add add_selfie">Add Selfie</button>
 				</div>
 			</div>
 		</section>
@@ -67,6 +69,7 @@
 		<script src="static/js/ractive-events-tap.js"></script>
 		<script src="static/js/lib.js"></script>
 		<script src="static/js/main.js"></script>
+		<script src="static/js/media.js"></script>
 
 	</body>
 </html>
