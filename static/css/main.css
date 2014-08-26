@@ -141,18 +141,21 @@ html, body, .wrapper, .wrapper .left, .wrapper .right{
 
 
 
-
+.open-sesame section.add{
+  visibility: visible;
+}
 section.add{
+  visibility: hidden;
   z-index: 2;
 }
 section.add .step1, section.add .step2{
   left: 50%;
   position: absolute;
   top: 50%;
-  transform: translate(-50%);
+  transform: translateX(-50%) translateY(-50%);
   visibility: hidden;
 }
-section.add .step1.active, section.add .step2.active{
+.open-sesame section.add .step1.active, .open-sesame section.add .step2.active{
   visibility: visible;
 }
 section.add .group{
@@ -168,7 +171,7 @@ section.add .group:after{
 }
 section.add .container{
   margin: 0 auto;
-  width: 600px;
+  width: 580px;
 }
 section.add label{
   color: #fff;
