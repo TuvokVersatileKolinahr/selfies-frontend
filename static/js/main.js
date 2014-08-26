@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	var x = new Backend.Api('http://selfies.tuvok.nl/api'), ractive;
 
 	// get all selfies
-	x.get('/selfies/9', {
+	x.get('/selfies/12', {
 		success: function(data, status, xhr){
 			console.info('Got ' + data.length + ' selfies!');
 			 ractive = new Ractive({
