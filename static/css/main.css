@@ -143,12 +143,17 @@ html, body, .wrapper, .wrapper .left, .wrapper .right{
 
 
 section.add{
-  margin: 0 10px;
+  z-index: 2;
+}
+section.add .step1, section.add .step2{
+  left: 50%;
   position: absolute;
   top: 50%;
-  transform: translateY(-50%);
-  width: 100%;
-  z-index: 2;
+  transform: translate(-50%);
+  visibility: hidden;
+}
+section.add .step1.active, section.add .step2.active{
+  visibility: visible;
 }
 section.add .group{
   padding: 10px 0;
@@ -186,9 +191,28 @@ section.add .group.buttons{
   padding: 10px 20px;
   text-align: right;
 }
-section.add .group.buttons .cancel{
+section.add .group.buttons .submit{
+  background: transparent;
+  border: 1px solid #4c180d;
+  border-radius: 4px;
+  color: #4c180d;
+  cursor: pointer;
   font-size: 1.2em;
-  
+  padding: 5px 10px;
+  transition: all .3s ease-in-out 0s;
+}
+section.add .group.buttons .submit:hover{
+  border-color: #0B4407;
+  color: #0B4407;
+}
+section.add .group.buttons .cancel{
+  color: #4c180d;
+  font-size: 1.2em;
+  text-decoration: none;
+  transition: all .3s ease-in-out 0s;
+}
+section.add .group.buttons .cancel:hover{
+  color: #6B0705;
 }
 
 
