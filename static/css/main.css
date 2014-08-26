@@ -46,6 +46,9 @@ body{
 .selfie .handle{
 	cursor: pointer;
 }
+.selfie .back .handle{
+  opacity: 0;
+}
 /* CARD Layout for selfie */ 
 .card {
   width: 100%;
