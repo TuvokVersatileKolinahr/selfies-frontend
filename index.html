@@ -19,8 +19,31 @@
 			
 		</section>
 
-		<section class="add">
+		<section id="addSelfie" class="add">
 
+			
+
+		</section>
+	</div>
+
+		<script id="selfiestpl" type="text/ractive">
+		  {{#each selfies}}
+		    {{#isActive}} {{!show only active selfies}}
+		  	<div class="selfie" on-tap="flip">
+		  		<div class="back">
+		  			<h2 class="handle"></h2>
+		  			<p class="about">{{about}}</p>
+		  		</div>
+		  		<div class="front">
+		  			<h2 class="handle">{{name}}</h2>
+		  			<img src="{{getSrc(this)}}" alt="Selfie {{name}}" />
+		  		</div>
+		  	</div>
+		  	{{/isActive}}
+		  {{/each}}
+		</script>
+
+		<script id="addWizardtpl" type="text/ractive">
 			<div class="container step1 active">
 				<div class="group">
 					<video id="mugshot" class="videostream" autoplay loop></video>
@@ -48,32 +71,12 @@
 					<button class="button add_selfie">Add Selfie</button>
 				</div>
 			</div>
-
-		</section>
-	</div>
-
-		<script id="selfiestpl" type="text/ractive">
-		  {{#each selfies}}
-		    {{#isActive}} {{!show only active selfies}}
-		  	<div class="selfie" on-tap="flip">
-		  		<div class="back">
-		  			<h2 class="handle"></h2>
-		  			<p class="about">{{about}}</p>
-		  		</div>
-		  		<div class="front">
-		  			<h2 class="handle">{{name}}</h2>
-		  			<img src="{{getSrc(this)}}" alt="Selfie {{name}}" />
-		  		</div>
-		  	</div>
-		  	{{/isActive}}
-		  {{/each}}
 		</script>
 
 		<script src='static/js/ractive.js'></script> 
 		<script src="static/js/ractive-events-tap.js"></script>
 		<script src="static/js/lib.js"></script>
 		<script src="static/js/main.js"></script>
-		<script src="static/js/media.js"></script>
 
 	</body>
 </html>

@@ -98,7 +98,7 @@ var Loader = (function(){
      * @param {string} filename the relative filename where to find the CSS file
      * @param {function} optional callback
      * 
-     * @return {API} for chaining
+     * @return {Loader} for chaining
      */
     var loadCss = function(filename, callback){
         if (cssExists(filename)) return;
@@ -109,7 +109,7 @@ var Loader = (function(){
         console&&console.log('Loading css ' + filename);
         document.getElementsByTagName("head")[0].appendChild(fileref);
 
-        return API;
+        return Loader;
     },
     /**
      * Load a javascript file into the head of the page
@@ -117,7 +117,7 @@ var Loader = (function(){
      * @param {string} filename the relative filename where to find the javascript file
      * @param {function} optional callback
      * 
-     * @return {API} for chaining
+     * @return {Loader} for chaining
      */
     loadJs = function(filename, callback){
         if (jsExists(filename)) return;
@@ -136,7 +136,7 @@ var Loader = (function(){
         }
         document.getElementsByTagName("head")[0].appendChild(fileref);
 
-        return API;
+        return Loader;
     },
      /**
      * Load a resource based on it's filename
@@ -144,7 +144,7 @@ var Loader = (function(){
      * @param {string} filename the relative filename where to find the javascript file
      * @param {function} optional callback
      * 
-     * @return {API} for chaining
+     * @return {Loader} for chaining
      */
     load = function(filename, callback){
         var parts = filename.match(/.*\.(.*)/);
@@ -188,8 +188,10 @@ var Loader = (function(){
     };
 
     return {
-            load    : load,
-            loadCss : loadCss,
-            loadJs  : loadJs
+            load     : load,
+            loadCss  : loadCss,
+            loadJs   : loadJs,
+            jsExists : jsExists,
+            cssExists: cssExists
         }
 })();
