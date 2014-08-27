@@ -153,7 +153,7 @@ section.add .step1, section.add .step2{
   position: absolute;
   top: 50%;
   transform: translateX(-50%) translateY(-50%);
-  visibility: hidden;
+  qvisibility: hidden;
 }
 .open-sesame section.add .step1.active, .open-sesame section.add .step2.active{
   visibility: visible;
@@ -221,7 +221,6 @@ section.add .group.buttons .cancel{
   text-decoration: none;
   transition: all .3s ease-in-out 0s;
 }
-
 section.add .group.buttons .cancel:hover{
   color: #6B0705;
 }

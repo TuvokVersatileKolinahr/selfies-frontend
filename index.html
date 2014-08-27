@@ -46,17 +46,22 @@
 		<script id="addWizardtpl" type="text/ractive">
 			<div class="container step1 active">
 				<div class="group">
-					<video id="mugshot" class="videostream" autoplay loop></video>
+					<video id="mugshot" class="videostream" autoplay loop on-tap="take-selfie"></video>
 					<img class="hidden" id="selfie" src="">
 					<canvas class="hidden"></canvas>
 				</div>
 				<div class="group buttons">
-					<a href="#" class="button take_selfie">Take selfie</a>
-					<a href="#" class="button retake_selfie">Retake selfie</a>
+					{{^hasSelfie}}
+					<a href="#" class="button take-selfie" on-tap="take-selfie">Take selfie</a>
+					{{/state}}
+					{{#hasSelfie}}
+					<a href="#" class="button retake-selfie" on-tap="retake-selfie">Retake selfie</a>
+					<a href="#" class="button take-selfie" on-tap="use-selfie">Use selfie</a>
+					{{/state}}
 				</div>
 			</div>
 
-			<div class="container step2">
+			<div class="container step2 hidden">
 				<div class="group">
 					<label for="name">Title</label>
 					<input class="input" type="text" id="name" autocomplete="off"/>
@@ -67,8 +72,8 @@
 				</div>
 				
 				<div class="group buttons">
-					<a href="#" class="cancel">Cancel</a>
-					<button class="button add_selfie">Add Selfie</button>
+					<a href="#" class="cancel" on-tap="cancel">Cancel</a>
+					<button class="button add-selfie" on-tap="add-selfie">Add Selfie</button>
 				</div>
 			</div>
 		</script>
