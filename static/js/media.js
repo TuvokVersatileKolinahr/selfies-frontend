@@ -39,8 +39,8 @@
 
   function snapshot() {
     if (localMediaStream) {
-      canvas.width = 580;
-      canvas.height = 773;
+      canvas.height = video.getBoundingClientRect().height;
+      canvas.width  = video.getBoundingClientRect().width;
 
       ctx.drawImage(video, 0, 0);
       // "image/webp" works in Chrome.
