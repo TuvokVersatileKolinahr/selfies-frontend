@@ -190,7 +190,6 @@ var Loader = (function(){
     return {
             load    : load,
             loadCss : loadCss,
-            loadJs  : loadJs,
-            trans   : trans
+            loadJs  : loadJs
         }
 })();
