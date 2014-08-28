@@ -110,10 +110,15 @@ document.addEventListener('DOMContentLoaded', function () {
 		
 	});
 	rAddWizard.on('add-selfie',function(){
-		var selfieimg = document.querySelector('#selfie');
-		console.log("selfieimg.src", selfieimg.src);
-	    var name = document.querySelector('#name').value;
-	    var about = document.querySelector('#about').value;
+			var selfieimg = document.querySelector('#selfie');
+	    var selfieblob = dataUriToBlob(selfieimg);
+	    var selfiename = document.querySelector('#name').value;
+	    var selfieabout = document.querySelector('#about').value;
+      // submit as a multipart form, along with any other data
+	    var form = new FormData();
+	    form.append('name', selfiename);
+	    form.append('about', selfieabout);
+	    form.append('pic', selfieblob);
 	    var x = new Backend.Api('http://selfies.tuvok.nl/api');
 	    x.post('/selfies', {
 	      success: function(data, status, xhr){
@@ -124,12 +129,33 @@ document.addEventListener('DOMContentLoaded', function () {
 	      error: function(xhr, errorType, error){
 	        console.log("error", error);
 	      },
-	      postdata: 'name=' + name + '&about=' + about + '&pic=' + selfieimg.src
+	      postdata: form
 	    });
-
-		
 	});
 
+	function dataUriToBlob(dataURI) {
+	    // serialize the base64/URLEncoded data
+	    var byteString;
+	    if (dataURI.split(',')[0].indexOf('base64') >= 0) {
+	        byteString = atob(dataURI.split(',')[1]);
+	    }
+	    else {
+	        byteString = unescape(dataURI.split(',')[1]);
+	    }
+
+	    // parse the mime type
+	    var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0]
+
+	    // construct a Blob of the image data
+	    var array = [];
+	    for(var i = 0; i < byteString.length; i++) {
+	        array.push(byteString.charCodeAt(i));
+	    }
+	    return new Blob(
+	        [new Uint8Array(array)],
+	        {type: mimeString}
+	    );
+	}
 
 	document.querySelector('.title').addEventListener('mousedown', function(e){
 		document.querySelector('.wrapper').classList.toggle('open-sesame');
