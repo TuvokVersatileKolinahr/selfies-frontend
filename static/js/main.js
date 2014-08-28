@@ -139,7 +139,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	        rSelfies.data.selfies.push(data.selfie);
 	        rAddWizard.fire('cancel');
 	      },
-	      error: function(xhr, errorType, error){
+	      error: function(error, status, xhr){
 	        console.log("error", error);
 	      },
 	      postdata: form

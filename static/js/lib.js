@@ -75,7 +75,8 @@ Backend.Api = function(baseUrl){
      */
     function decode(xhr){
         var response = xhr.responseText;
-        if (xhr.getResponseHeader('content-type').match(/json/)){
+        var type = xhr.getResponseHeader('content-type');
+        if (type && type.match(/json/)){
             response = JSON.parse(response);
         }
         return response;
