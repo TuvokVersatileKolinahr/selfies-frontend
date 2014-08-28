@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function () {
 		data: {
 			initialized: false,
 			hasSelfie: false,
-			step: 'step1'
+			step: 'step1',
 		}
 	});
 
@@ -40,17 +40,20 @@ document.addEventListener('DOMContentLoaded', function () {
 
 	// EVENT handling
 	rSelfies.on('flip', function(arg){
+		arg.original.preventDefault();
+
 		arg.node.classList.toggle('flipped');
 	});
 	rAddWizard.on('initialize',function(){
-		if (this.data.initialized === false){
+
+		if (this.get("initialized") === false){
 			
 			navigator.getUserMedia = navigator.getUserMedia ||
                             navigator.webkitGetUserMedia ||
                             navigator.mozGetUserMedia ||
                             navigator.msGetUserMedia;
 	        var errorCallback = function(e) {
-		      document.querySelector('video').src = 'no-means-no.webm'; // fallback.
+		    document.querySelector('video').src = 'no-means-no.webm'; // fallback.
 		    };
 	        if (navigator.getUserMedia) {
 
@@ -66,15 +69,16 @@ document.addEventListener('DOMContentLoaded', function () {
 			      };
 			    }, errorCallback);
 
+	        	this.set('initialized', true);
 			} else {
 			    errorCallback(); // fallback.
 			}
-
-			this.set('initialized', true);
 		};
 	});
-	rAddWizard.on('take-selfie',function(){
-		if (localMediaStream) {
+	rAddWizard.on('take-selfie',function(arg){
+		arg.original.preventDefault();
+
+		if (typeof localMediaStream === 'object') {
 			var canvas = document.querySelector('canvas');
 			var video = document.querySelector('video');
 			var ctx = canvas.getContext('2d');
@@ -94,7 +98,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
 		this.set('hasSelfie', true);
 	});
-	rAddWizard.on('retake-selfie',function(){
+	rAddWizard.on('retake-selfie',function(arg){
+		arg.original.preventDefault();
+
 		var selfieimg = document.querySelector('#selfie');
 		selfieimg.classList.add('hidden');
         selfieimg.src = '';
@@ -102,12 +108,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
 		this.set('hasSelfie', false);
 	});
-	rAddWizard.on('use-selfie',function(){
+	rAddWizard.on('use-selfie',function(arg){
+		arg.original.preventDefault();
+
 		this.set('step', 'step2');
 	});
 
-	rAddWizard.on('cancel',function(){
-		
+	rAddWizard.on('cancel',function(arg){
+		if(arg){arg.original.preventDefault();}
+
 		this.set('hasSelfie', false);
 		this.set('step', 'step1');
 		
@@ -115,21 +124,23 @@ document.addEventListener('DOMContentLoaded', function () {
 		document.querySelector('#selfie').classList.add('hidden');
 		document.querySelector('#selfie').attributes.src = '';
 
-		document.querySelector('.add input').value = '';
+		this.set('name', '');
+		this.set('about','');
 		document.querySelector('.add input').value = '';
 
 		document.querySelector('.wrapper').classList.toggle('open-sesame');
 	});
 
-	rAddWizard.on('add-selfie',function(){
-			var selfieimg = document.querySelector('#selfie');
+	rAddWizard.on('add-selfie',function(arg){
+		arg.original.preventDefault();
+
+		var selfieimg = document.querySelector('#selfie');
 	    var selfieblob = dataUriToBlob(selfieimg.src);
-	    var selfiename = document.querySelector('#name').value;
-	    var selfieabout = document.querySelector('#about').value;
-      // submit as a multipart form, along with any other data
+	    
+        // submit as a multipart form, along with any other data
 	    var form = new FormData();
-	    form.append('name', selfiename);
-	    form.append('about', selfieabout);
+	    form.append('name', this.get('name'));
+	    form.append('about', this.get('about'));
 	    form.append('pic', selfieblob);
 	    var x = new Backend.Api('http://selfies.tuvok.nl/api');
 	    x.post('/selfies', {
@@ -170,7 +181,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	    );
 	}
 
-	document.querySelector('.title').addEventListener('mousedown', function(e){
+	document.querySelector('.show-add').addEventListener('mousedown', function(e){
 		document.querySelector('.wrapper').classList.toggle('open-sesame');
 		rAddWizard.fire('initialize');
 	}, false);

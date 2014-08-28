@@ -22,14 +22,19 @@ img{max-width:100%;}
 body, textarea{
 	font: 1em "Open Sans",Helvetica,Arial,sans-serif;
 }
-h1.title{
-  color: #4C180D;
-  cursor: pointer;
-  font-size: 3em;
+.left-panel{
   position: relative;
   top: 50%;
   transform: translateY(-50%);
   text-align: center;
+}
+.left-panel .title{
+  color: #4C180D;
+  font-size: 3em;
+  margin-bottom: 20px;
+}
+.left-panel .button.show-add{
+
 }
 html, body, .wrapper, .wrapper .left, .wrapper .right{
   height: 100%;
@@ -200,7 +205,7 @@ section.add .group.buttons{
   padding: 10px 20px;
   text-align: right;
 }
-section.add .group.buttons .button{
+.button{
   background: transparent;
   border: 1px solid #4c180d;
   border-radius: 4px;
@@ -211,17 +216,20 @@ section.add .group.buttons .button{
   text-decoration: none;
   transition: all .3s ease-in-out 0s;
 }
-section.add .group.buttons .button:hover{
+.button:hover{
   border-color: #0B4407;
   color: #0B4407;
 }
-section.add .group.buttons .cancel{
+.button.large{
+  font-size: 2em;
+}
+.cancel{
   color: #4c180d;
   font-size: 1.2em;
   text-decoration: none;
   transition: all .3s ease-in-out 0s;
 }
-section.add .group.buttons .cancel:hover{
+.cancel:hover{
   color: #6B0705;
 }
 

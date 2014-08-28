@@ -13,7 +13,12 @@
 	<div class="wrapper">
 
 		<section class="left">
-			<h1 class="title">Say it with a Selfie</h1>
+
+			<div class="left-panel"> 
+				<h1 class="title">Say it with a Selfie</h1>
+
+				<button class="button large show-add">Add your selfie</button>
+			</div>
 		</section>
 		<section id="selfies" class="right clearfix">
 			
@@ -44,7 +49,6 @@
 		</script>
 
 		<script id="addWizardtpl" type="text/ractive">
-			
 			<div class="container step1 active {{#step === 'step2'}}hidden{{/step}}">
 				<div class="group">
 					<video id="mugshot" class="videostream" autoplay loop on-tap="take-selfie"></video>
@@ -66,11 +70,11 @@
 			<div class="container step2 {{#step === 'step1'}}hidden{{/step}}">
 				<div class="group">
 					<label for="name">Title</label>
-					<input class="input" type="text" id="name" autocomplete="off"/>
+					<input class="input" type="text" value={{name}} autocomplete="off"/>
 				</div>
 				<div class="group">
 					<label for="about">About</label>
-					<textarea class="input" id="about"></textarea>
+					<textarea class="input" value={{about}}></textarea>
 				</div>
 				
 				<div class="group buttons">
@@ -78,7 +82,6 @@
 					<button class="button add-selfie" on-tap="add-selfie">Add Selfie</button>
 				</div>
 			</div>
-			
 		</script>
 
 		<script src='static/js/ractive.js'></script> 
