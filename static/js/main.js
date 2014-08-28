@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function () {
 			  el: '#selfies',
 			  template: '#selfiestpl',
 			  data: { 
-			  	selfies: {},
+			  	selfies: [], // init with empty array
 			  	getSrc: function(selfie){
 			  		return selfie.picture + "?" + selfie._id;
 			  	}
@@ -105,10 +105,23 @@ document.addEventListener('DOMContentLoaded', function () {
 		document.querySelector('.add .step1').classList.add('hidden');
 		document.querySelector('.add .step2').classList.remove('hidden');
 	});
+
 	rAddWizard.on('cancel',function(){
+		
 		this.set('hasSelfie', false);
 		
+		document.querySelector('.add .step1').classList.remove('hidden');
+		document.querySelector('video').classList.remove('hidden');
+		document.querySelector('.add .step2').classList.add('hidden');
+		document.querySelector('#selfie').classList.add('hidden');
+		document.querySelector('#selfie').attributes.src = '';
+
+		document.querySelector('.add input').value = '';
+		document.querySelector('.add input').value = '';
+
+		document.querySelector('.wrapper').classList.toggle('open-sesame');
 	});
+
 	rAddWizard.on('add-selfie',function(){
 			var selfieimg = document.querySelector('#selfie');
 	    var selfieblob = dataUriToBlob(selfieimg.src);
@@ -124,7 +137,8 @@ document.addEventListener('DOMContentLoaded', function () {
 	      success: function(data, status, xhr){
 	        console.info('post done');
 	        rAddWizard.set('hasSelfie', false);
-	        document.querySelector('.wrapper').classList.toggle('open-sesame');
+	        rSelfies.data.selfies.push(data.selfie);
+	        rAddWizard.fire('cancel');
 	      },
 	      error: function(xhr, errorType, error){
 	        console.log("error", error);
