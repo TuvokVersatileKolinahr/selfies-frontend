@@ -111,7 +111,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	});
 	rAddWizard.on('add-selfie',function(){
 			var selfieimg = document.querySelector('#selfie');
-	    var selfieblob = dataUriToBlob(selfieimg);
+	    var selfieblob = dataUriToBlob(selfieimg.src);
 	    var selfiename = document.querySelector('#name').value;
 	    var selfieabout = document.querySelector('#about').value;
       // submit as a multipart form, along with any other data
