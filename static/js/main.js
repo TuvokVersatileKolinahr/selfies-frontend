@@ -118,7 +118,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	    x.post('/selfies', {
 	      success: function(data, status, xhr){
 	        console.info('post done');
-	        this.set('hasSelfie', false);
+	        rAddWizard.set('hasSelfie', false);
 	        document.querySelector('.wrapper').classList.toggle('open-sesame');
 	      },
 	      error: function(xhr, errorType, error){
