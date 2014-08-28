@@ -44,6 +44,7 @@
 		</script>
 
 		<script id="addWizardtpl" type="text/ractive">
+			{{#step === 'step1'}}
 			<div class="container step1 active">
 				<div class="group">
 					<video id="mugshot" class="videostream" autoplay loop on-tap="take-selfie"></video>
@@ -60,8 +61,9 @@
 					{{/state}}
 				</div>
 			</div>
-
-			<div class="container step2 hidden">
+			{{/step}}
+			{{#step === 'step2'}}
+			<div class="container step2">
 				<div class="group">
 					<label for="name">Title</label>
 					<input class="input" type="text" id="name" autocomplete="off"/>
@@ -76,6 +78,7 @@
 					<button class="button add-selfie" on-tap="add-selfie">Add Selfie</button>
 				</div>
 			</div>
+			{{/step}}
 		</script>
 
 		<script src='static/js/ractive.js'></script> 

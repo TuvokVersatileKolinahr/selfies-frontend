@@ -25,7 +25,8 @@ document.addEventListener('DOMContentLoaded', function () {
 		template: '#addWizardtpl',
 		data: {
 			initialized: false,
-			hasSelfie: false
+			hasSelfie: false,
+			step: 'step1'
 		}
 	});
 
@@ -102,17 +103,15 @@ document.addEventListener('DOMContentLoaded', function () {
 		this.set('hasSelfie', false);
 	});
 	rAddWizard.on('use-selfie',function(){
-		document.querySelector('.add .step1').classList.add('hidden');
-		document.querySelector('.add .step2').classList.remove('hidden');
+		this.set('step', 'step2');
 	});
 
 	rAddWizard.on('cancel',function(){
 		
 		this.set('hasSelfie', false);
+		this.set('step', 'step1');
 		
-		document.querySelector('.add .step1').classList.remove('hidden');
 		document.querySelector('video').classList.remove('hidden');
-		document.querySelector('.add .step2').classList.add('hidden');
 		document.querySelector('#selfie').classList.add('hidden');
 		document.querySelector('#selfie').attributes.src = '';
 
