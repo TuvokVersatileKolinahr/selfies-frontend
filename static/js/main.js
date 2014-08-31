@@ -9,7 +9,7 @@
  */
 document.addEventListener('DOMContentLoaded', function () {
 
-	var x = new Backend.Api('http://selfies.tuvok.nl/api'),
+	var rest = new Rest('http://selfies.tuvok.nl/api'),
 	rSelfies = new Ractive({
 			  el: '#selfies',
 			  template: '#selfiestpl',
@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	});
 
 	// get all selfies
-	x.get('/selfies/12', {
+	rest.get('/selfies/12', {
 		success: function(data, status, xhr){
 			console.info('Got ' + data.length + ' selfies!');
 			rSelfies.set('selfies', data);
@@ -142,8 +142,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	    form.append('name', this.get('name'));
 	    form.append('about', this.get('about'));
 	    form.append('pic', selfieblob);
-	    var x = new Backend.Api('http://selfies.tuvok.nl/api');
-	    x.post('/selfies', {
+	    rest.post('/selfies', {
 	      success: function(data, status, xhr){
 	        console.info('post done');
 	        rAddWizard.set('hasSelfie', false);
