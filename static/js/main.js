@@ -152,7 +152,8 @@ document.addEventListener('DOMContentLoaded', function () {
 	      error: function(error, status, xhr){
 	        console.log("error", error);
 	      },
-	      postdata: form
+	      contentType: 'multipart/form-data',
+	      data: form
 	    });
 	});
 
