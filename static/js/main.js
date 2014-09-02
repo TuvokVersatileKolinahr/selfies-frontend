@@ -125,6 +125,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     this.set('name', '');
     this.set('about','');
+    this.set('error', '');
     document.querySelector('.add input').value = '';
 
     document.querySelector('.wrapper').classList.toggle('open-sesame');
@@ -138,24 +139,43 @@ document.addEventListener('DOMContentLoaded', function () {
     var selfieimg = document.querySelector('#selfie');
     var selfieblob = dataUriToBlob(selfieimg.src);
     
-    // submit as a multipart form, along with any other data
-    var form = new FormData();
-    form.append('name', this.get('name'));
-    form.append('about', this.get('about'));
-    form.append('pic', selfieblob);
-    rest.post('/selfies', {
-      success: function(data, status, xhr){
-      console.info('post done');
-      rAddWizard.set('hasSelfie', false);
-      rSelfies.data.selfies.push(data.selfie);
-      rAddWizard.fire('cancel');
-      },
-      error: function(error, status, xhr){
-      console.log("error", error);
-      },
-      contentType: 'multipart/form-data',
-      data: form
-    });
+     this.set('error', '');
+    // validation
+    if (this.get('about').length === 0){
+      this.set('error', 'Field About is mandatory');
+    }
+    else if (this.get('about').length > 101){
+      this.set('error', 'Field About can only contain 101 chars');
+    }
+    if (this.get('name').length === 0){
+      this.set('error', 'Field title is mandatory');
+    }
+    else if (this.get('name').length > 27){
+      this.set('error', 'Field title can only contain 27 chars');
+    }
+
+    if (!this.get('error')){
+      // submit as a multipart form, along with any other data
+      var form = new FormData();
+      form.append('name', this.get('name'));
+      form.append('about', this.get('about'));
+      form.append('pic', selfieblob);
+      rest.post('/selfies', {
+        success: function(data, status, xhr){
+        console.info('post done');
+        rAddWizard.set('hasSelfie', false);
+        rSelfies.data.selfies.push(data.selfie);
+        rAddWizard.fire('cancel');
+        },
+        error: function(error, status, xhr){
+          error = error || 'Oops, something went wrong...';
+          console.log("error", error);
+          rAddWizard.set('error', error + ' (' + status + ')' );
+        },
+        contentType: 'multipart/form-data',
+        data: form
+      });
+    }
   });
 
   function dataUriToBlob(dataURI) {

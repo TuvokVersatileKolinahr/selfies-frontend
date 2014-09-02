@@ -49,6 +49,11 @@
 		</script>
 
 		<script id="addWizardtpl" type="text/ractive">
+
+			{{#error}}
+				<div class="error">{{error}}</div>
+			{{/error}}
+
 			<div class="container step1 active {{#step === 'step2'}}hidden{{/step}}">
 				<div class="group">
 					<video id="mugshot" class="videostream" autoplay loop on-tap="take-selfie"></video>
@@ -87,7 +92,6 @@
 		<script src='static/js/ractive.js'></script> 
 		<script src="static/js/ractive-events-tap.js"></script>
 		<script src="static/js/vendor/Rest.js"></script>
-		<script src="static/js/lib.js"></script>
 		<script src="static/js/main.js"></script>
 
 	</body>
