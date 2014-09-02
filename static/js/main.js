@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   // get all selfies
-  rest.get('/selfies/12', {
+  rest.get('/selfies/16', {
     success: function(data, status, xhr){
       console.info('Got ' + data.length + ' selfies!');
       rSelfies.set('selfies', data);
