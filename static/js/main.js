@@ -112,6 +112,8 @@ document.addEventListener('DOMContentLoaded', function () {
 		arg.original.preventDefault();
 
 		this.set('step', 'step2');
+
+		document.querySelector('.wrapper').style.backgroundImage = 'url('+document.querySelector('#selfie').src+')';
 	});
 
 	rAddWizard.on('cancel',function(arg){
@@ -129,6 +131,9 @@ document.addEventListener('DOMContentLoaded', function () {
 		document.querySelector('.add input').value = '';
 
 		document.querySelector('.wrapper').classList.toggle('open-sesame');
+
+		// revert background image
+		document.querySelector('.wrapper').removeAttribute('style');
 	});
 
 	rAddWizard.on('add-selfie',function(arg){
