@@ -180,9 +180,9 @@ document.addEventListener('DOMContentLoaded', function () {
       xhr.onload = function(e) { 
         console.log('e', e); 
       };
-      xhr.onreadystatechange = function() {//Call a function when the state changes.
+      xhr.onreadystatechange = function(data) {//Call a function when the state changes.
         if(xhr.readyState == 4 && xhr.status == 200) {
-          console.info('post done');
+          console.info('post done ', data);
           rAddWizard.set('hasSelfie', false);
           rSelfies.data.selfies.push(data.selfie);
           rAddWizard.fire('cancel');
