@@ -160,23 +160,61 @@ document.addEventListener('DOMContentLoaded', function () {
       form.append('name', this.get('name'));
       form.append('about', this.get('about'));
       form.append('pic', selfieblob);
-      rest.post('/selfies', {
-        success: function(data, status, xhr){
-        console.info('post done');
-        rAddWizard.set('hasSelfie', false);
-        rSelfies.data.selfies.push(data.selfie);
-        rAddWizard.fire('cancel');
-        },
-        error: function(error, status, xhr){
-          error = error || 'Oops, something went wrong...';
-          console.log("error", error);
-          rAddWizard.set('error', error + ' (' + status + ')' );
-        },
-        contentType: 'multipart/form-data',
-        data: form
-      });
+      // rest.post('/selfies', {
+      //   success: function(data, status, xhr){
+      //   console.info('post done');
+      //   rAddWizard.set('hasSelfie', false);
+      //   rSelfies.data.selfies.push(data.selfie);
+      //   rAddWizard.fire('cancel');
+      //   },
+      //   error: function(error, status, xhr){
+      //     error = error || 'Oops, something went wrong...';
+      //     console.log("error", error);
+      //     rAddWizard.set('error', error + ' (' + status + ')' );
+      //   },
+      //   contentType: 'multipart/form-data',
+      //   data: form
+      // });
+      var xhr = new XMLHttpRequest();
+      xhr.open('POST', 'http://selfies.tuvok.nl/api/selfies', true);
+      xhr.onload = function(e) { 
+        console.log('e', e); 
+      };
+      xhr.onreadystatechange = function() {//Call a function when the state changes.
+        if(xhr.readyState == 4 && xhr.status == 200) {
+          console.info('post done');
+          rAddWizard.set('hasSelfie', false);
+          rSelfies.data.selfies.push(data.selfie);
+          rAddWizard.fire('cancel');
+        }
+      }
+      xhr.send(getCanvasFromHTML());
     }
   });
+
+  function getCanvasFromHTML() {
+    var canvas = document.querySelector('canvas');
+    var dataURL = canvas.toDataURL();
+    var file = dataURLtoBlob(dataURL);
+    var form = new FormData();
+    form.append('name', document.querySelector('.add input').value);
+    form.append('about', document.querySelector('.add textarea').value);
+    form.append('pic', file, 'canvas.png');
+
+    return form;
+  }
+
+  function dataURLtoBlob(dataURL) {
+    // Decode the dataURL
+    var binary = atob(dataURL.split(',')[1]);
+    // Create 8-bit unsigned array
+    var array = [];
+    for(var i = 0; i < binary.length; i++) {
+      array.push(binary.charCodeAt(i));
+    }
+    // Return our Blob object
+    return new Blob([new Uint8Array(array)], {type: 'image/png'});
+  }
 
   function dataUriToBlob(dataURI) {
     // serialize the base64/URLEncoded data
