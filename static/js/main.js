@@ -79,8 +79,9 @@ document.addEventListener('DOMContentLoaded', function () {
       var ctx = canvas.getContext('2d');
       var selfieimg = document.querySelector('#selfie');
 
-      canvas.height = video.getBoundingClientRect().height;
+      // make square
       canvas.width  = video.getBoundingClientRect().width;
+      canvas.height = video.getBoundingClientRect().width;
 
       ctx.drawImage(video, 0, 0);
       // "image/webp" works in Chrome.

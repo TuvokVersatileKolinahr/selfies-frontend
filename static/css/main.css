@@ -174,10 +174,10 @@ section.add .step1, section.add .step2{
   visibility: visible;
 }
 section.add video{
-  width: 580px;
+  width: 400px;
 }
 section.add img{
-  width: 580px;
+  qwidth: 580px;
 }
 section.add .group{
   padding: 10px 0;
