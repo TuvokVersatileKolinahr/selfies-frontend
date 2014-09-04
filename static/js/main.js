@@ -172,7 +172,6 @@ document.addEventListener('DOMContentLoaded', function () {
           console.log("error", error);
           rAddWizard.set('error', error + ' (' + status + ')' );
         },
-        contentType: 'multipart/form-data',
         data: form
       });
     }
