@@ -6,6 +6,7 @@
  * name     string
  * picture  url
  * uploaded timestamp
+ * created_at
  */
 document.addEventListener('DOMContentLoaded', function () {
 
@@ -30,6 +31,8 @@ document.addEventListener('DOMContentLoaded', function () {
       error: null
     }
   });
+
+  window.rSelfies = rSelfies;
 
   // get all selfies
   rest.get('/selfies/16', {
@@ -136,7 +139,7 @@ document.addEventListener('DOMContentLoaded', function () {
     var selfieimg = document.querySelector('#selfie');
     var selfieblob = dataUriToBlob(selfieimg.src);
     
-     this.set('error', '');
+    this.set('error', '');
     // validation
     if (this.get('about').length === 0){
       this.set('error', 'Field About is mandatory');
@@ -158,10 +161,13 @@ document.addEventListener('DOMContentLoaded', function () {
       form.append('about', this.get('about'));
       form.append('pic', selfieblob, "selfie.png");
       rest.post('/selfies', {
-        success: function(data, status, xhr){
+        success: function(response, status, xhr){
         console.info('post done');
-        rAddWizard.set('hasSelfie', false);
-        rSelfies.data.selfies.push(data.selfie);
+        var selfies = rSelfies.get('selfies');
+        selfies.reverse();
+        selfies.push(response.data);
+        selfies.reverse();
+        
         rAddWizard.fire('cancel');
         },
         error: function(error, status, xhr){
