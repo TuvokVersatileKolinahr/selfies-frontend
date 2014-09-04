@@ -177,30 +177,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 
-  function getCanvasFromHTML() {
-    var canvas = document.querySelector('canvas');
-    var dataURL = canvas.toDataURL();
-    var file = dataURLtoBlob(dataURL);
-    var form = new FormData();
-    form.append('name', document.querySelector('.add input').value);
-    form.append('about', document.querySelector('.add textarea').value);
-    form.append('pic', file, 'canvas.png');
-
-    return form;
-  }
-
-  function dataURLtoBlob(dataURL) {
-    // Decode the dataURL
-    var binary = atob(dataURL.split(',')[1]);
-    // Create 8-bit unsigned array
-    var array = [];
-    for(var i = 0; i < binary.length; i++) {
-      array.push(binary.charCodeAt(i));
-    }
-    // Return our Blob object
-    return new Blob([new Uint8Array(array)], {type: 'image/png'});
-  }
-
   function dataUriToBlob(dataURI) {
     // serialize the base64/URLEncoded data
     var byteString;
