@@ -27,6 +27,7 @@ document.addEventListener('DOMContentLoaded', function () {
       initialized: false,
       hasSelfie: false,
       step: 'step1',
+      error: null
     }
   });
 
@@ -38,25 +39,20 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 
-  // EVENT handling
+  // Flip a selfie when clicked on it
   rSelfies.on('flip', function(arg){
     arg.original.preventDefault();
-
     arg.node.classList.toggle('flipped');
   });
+  // initialize the Add Wizard 
   rAddWizard.on('initialize',function(){
-    if (this.get("initialized") === false){
-      
       navigator.getUserMedia = navigator.getUserMedia ||
               navigator.webkitGetUserMedia ||
               navigator.mozGetUserMedia ||
               navigator.msGetUserMedia;
-      var errorCallback = function(e) {
-      document.getElementById('mugshot').src = 'no-means-no.webm'; // fallback.
-      };
       if (navigator.getUserMedia) {
-
         navigator.getUserMedia({video: true, audio: false}, function(stream) {
+          rAddWizard.set('initialized', true);
           var video = document.getElementById('mugshot');
           video.src = window.URL.createObjectURL(stream);
 
@@ -65,14 +61,14 @@ document.addEventListener('DOMContentLoaded', function () {
           video.onloadedmetadata = function(e) {
           // Ready to go. Do some stuff.
           localMediaStream = stream;
+          console.log('asdf');
           };
-        }, errorCallback);
-
-        this.set('initialized', true);
+        }, function(e) {
+          rAddWizard.set('error', 'Please share your webcam to enable taking your selfie');
+        });
       } else {
-        errorCallback(); // fallback.
+        this.set('error', 'Taking a picture with your webcam is not supported by the browser');
       }
-    };
   });
   rAddWizard.on('take-selfie',function(arg){
     arg.original.preventDefault();
@@ -128,7 +124,7 @@ document.addEventListener('DOMContentLoaded', function () {
     this.set('error', '');
     document.querySelector('.add input').value = '';
 
-    document.querySelector('.wrapper').classList.toggle('open-sesame');
+    document.querySelector('.wrapper').classList.remove('open-sesame');
 
     // revert background image
     document.querySelector('.wrapper').removeAttribute('style');
@@ -203,6 +199,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
   document.querySelector('.show-add').addEventListener('mousedown', function(e){
     document.querySelector('.wrapper').classList.toggle('open-sesame');
-    rAddWizard.fire('initialize');
-  }, false);
+    if ( document.querySelector('.wrapper').classList.contains('open-sesame')){
+      if (!rAddWizard.get('initialized')){
+        rAddWizard.fire('initialize');
+      };
+    } 
+    else{
+      rAddWizard.fire('cancel');
+    }
+      
+    }, false);
 });
