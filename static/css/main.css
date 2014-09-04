@@ -174,7 +174,7 @@ section.add .step1, section.add .step2{
   visibility: visible;
 }
 section.add video{
-  width: 400px;
+  qwidth: 400px;
 }
 section.add img{
   qwidth: 580px;

@@ -11,6 +11,7 @@
 document.addEventListener('DOMContentLoaded', function () {
 
   var rest = new Rest('http://selfies.tuvok.nl/api'),
+  webcam,
   rSelfies = new Ractive({
     el: '#selfies',
     template: '#selfiestpl',
@@ -31,9 +32,6 @@ document.addEventListener('DOMContentLoaded', function () {
       error: null
     }
   });
-
-  window.rSelfies = rSelfies;
-
   // get all selfies
   rest.get('/selfies/16', {
     success: function(data, status, xhr){
@@ -49,23 +47,13 @@ document.addEventListener('DOMContentLoaded', function () {
   });
   // initialize the Add Wizard 
   rAddWizard.on('initialize',function(){
-      navigator.getUserMedia = navigator.getUserMedia ||
-              navigator.webkitGetUserMedia ||
-              navigator.mozGetUserMedia ||
-              navigator.msGetUserMedia;
-      if (navigator.getUserMedia) {
-        navigator.getUserMedia({video: true, audio: false}, function(stream) {
+      if (!webcam){
+        webcam = new Webcam('#mugshot');
+        webcam.init();
+      }
+      if (webcam.isSupported()) {
+        webcam.enable({video: true, audio: false}, function(stream) {
           rAddWizard.set('initialized', true);
-          var video = document.getElementById('mugshot');
-          video.src = window.URL.createObjectURL(stream);
-
-          // Note: onloadedmetadata doesn't fire in Chrome when using it with getUserMedia.
-          // See crbug.com/110938.
-          video.onloadedmetadata = function(e) {
-          // Ready to go. Do some stuff.
-          localMediaStream = stream;
-          console.log('asdf');
-          };
         }, function(e) {
           rAddWizard.set('error', 'Please share your webcam to enable taking your selfie');
         });
@@ -76,25 +64,23 @@ document.addEventListener('DOMContentLoaded', function () {
   rAddWizard.on('take-selfie',function(arg){
     arg.original.preventDefault();
 
-    if (typeof localMediaStream === 'object') {
-      var canvas = document.querySelector('canvas');
-      var video = document.getElementById('mugshot');
-      var ctx = canvas.getContext('2d');
+    if (webcam.isSupported()) {
       var selfieimg = document.querySelector('#selfie');
+      selfieimg.src = webcam.takePicture(function(ctx, canvas){
+       
+        var min = Math.min(canvas.width,canvas.height);
+        var max = Math.max(canvas.width,canvas.height);
+         canvas.width = min;
+        canvas.height = min;
+        ctx.drawImage(webcam.element(), (max-min)/2, 0, min,min, 0,0,min,min);
 
-      // make square
-      canvas.width  = video.getBoundingClientRect().width;
-      canvas.height = video.getBoundingClientRect().width;
+       
+      });
 
-      ctx.drawImage(video, 0, 0);
-      // "image/webp" works in Chrome.
-      // Other browsers will fall back to image/png.
-      selfieimg.src = canvas.toDataURL('image/png');
-      video.classList.add('hidden');
+      webcam.element().classList.add('hidden');
       selfieimg.classList.remove('hidden');
-      }
-
-    this.set('hasSelfie', true);
+      this.set('hasSelfie', true);
+    }
   });
   rAddWizard.on('retake-selfie',function(arg){
     arg.original.preventDefault();
@@ -103,6 +89,7 @@ document.addEventListener('DOMContentLoaded', function () {
     selfieimg.classList.add('hidden');
     selfieimg.src = '';
     document.getElementById('mugshot').classList.remove('hidden');
+    webcam.reset();
 
     this.set('hasSelfie', false);
   });
@@ -119,7 +106,7 @@ document.addEventListener('DOMContentLoaded', function () {
     this.set('hasSelfie', false);
     this.set('step', 'step1');
     
-    document.getElementById('mugshot').classList.remove('hidden');
+    webcam.element().classList.remove('hidden');
     document.getElementById('selfie').classList.add('hidden');
     document.getElementById('selfie').attributes.src = '';
 
@@ -135,9 +122,6 @@ document.addEventListener('DOMContentLoaded', function () {
   });
   rAddWizard.on('add-selfie',function(arg){
     arg.original.preventDefault();
-
-    var selfieimg = document.querySelector('#selfie');
-    var selfieblob = dataUriToBlob(selfieimg.src);
     
     this.set('error', '');
     // validation
@@ -154,7 +138,13 @@ document.addEventListener('DOMContentLoaded', function () {
       this.set('error', 'Field title can only contain 27 chars');
     }
 
+    if (!webcam.hasImage){
+      this.set('error', 'No selfie image present');
+    }
+
     if (!this.get('error')){
+      var selfieblob = webcam.uriToBlob(document.querySelector('#selfie').src);
+
       // submit as a multipart form, along with any other data
       var form = new FormData();
       form.append('name', this.get('name'));
@@ -162,13 +152,12 @@ document.addEventListener('DOMContentLoaded', function () {
       form.append('pic', selfieblob, "selfie.png");
       rest.post('/selfies', {
         success: function(response, status, xhr){
-        console.info('post done');
-        var selfies = rSelfies.get('selfies');
-        selfies.reverse();
-        selfies.push(response.data);
-        selfies.reverse();
-        
-        rAddWizard.fire('cancel');
+          var selfies = rSelfies.get('selfies');
+          selfies.reverse();
+          selfies.push(response.data);
+          selfies.reverse();
+
+          rAddWizard.fire('cancel');
         },
         error: function(error, status, xhr){
           error = error || 'Oops, something went wrong...';
@@ -179,30 +168,6 @@ document.addEventListener('DOMContentLoaded', function () {
       });
     }
   });
-
-  function dataUriToBlob(dataURI) {
-    // serialize the base64/URLEncoded data
-    var byteString;
-    if (dataURI.split(',')[0].indexOf('base64') >= 0) {
-      byteString = atob(dataURI.split(',')[1]);
-    }
-    else {
-      byteString = unescape(dataURI.split(',')[1]);
-    }
-
-    // parse the mime type
-    var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0]
-
-    // construct a Blob of the image data
-    var array = [];
-    for(var i = 0; i < byteString.length; i++) {
-      array.push(byteString.charCodeAt(i));
-    }
-    return new Blob(
-      [new Uint8Array(array)],
-      {type: mimeString}
-    );
-  }
 
   document.querySelector('.show-add').addEventListener('mousedown', function(e){
     document.querySelector('.wrapper').classList.toggle('open-sesame');
@@ -217,3 +182,90 @@ document.addEventListener('DOMContentLoaded', function () {
       
     }, false);
 });
+
+
+/**
+ * make use of the webcam
+ */
+var Webcam = function(selector){
+  /** The image stream  */
+  var imageStream,
+  element = document.querySelector(selector),
+  init = function(){
+    navigator.getUserMedia = navigator.getUserMedia ||
+      navigator.webkitGetUserMedia ||
+      navigator.mozGetUserMedia ||
+      navigator.msGetUserMedia;
+  }, isSupported = function(){
+    return !!navigator.getUserMedia
+  }, enable = function(options, fnSuccess, fnFailure){
+    navigator.getUserMedia(options||{}, function(stream){
+      element.src = window.URL.createObjectURL(stream);
+      // copy stream to global
+      element.onloadedmetadata = function(e) {
+        imageStream = stream;
+      };
+      fnSuccess(stream);
+    }, fnFailure||function(){});
+  }, hasImage = function(){
+    return !!window.imageStream;
+  }, takePicture = function(fnDrawImage){
+    var canvas = document.getElementById("webcamCanvas"); 
+    if (!canvas){
+      canvas = document.createElement('canvas');
+      canvas.id = "webcamCanvas";
+      canvas.style.display="none";
+      document.body.appendChild(canvas);
+      // make same size as video
+      canvas.width  = element.getBoundingClientRect().width;
+      canvas.height = element.getBoundingClientRect().height;
+    }
+    var ctx = canvas.getContext('2d');
+    if (fnDrawImage){
+      fnDrawImage(ctx, canvas);
+    }
+    else{
+      ctx.drawImage(element, 0, 0);
+    }
+
+    return canvas.toDataURL('image/png');
+  }, reset = function(){
+    imageStream = null;
+  }, uriToBlob = function(dataURI) {
+    // serialize the base64/URLEncoded data
+    var byteString;
+    if (dataURI.split(',')[0].indexOf('base64') >= 0) {
+      byteString = atob(dataURI.split(',')[1]);
+    }
+    else {
+      byteString = unescape(dataURI.split(',')[1]);
+    }
+    if (!byteString){
+      throw "Unable to fetch data from dataUri";
+    }
+
+    // parse the mime type
+    var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0]
+
+    // construct a Blob of the image data
+    var array = [];
+    for(var i = 0; i < byteString.length; i++) {
+      array.push(byteString.charCodeAt(i));
+    }
+    return new Blob(
+      [new Uint8Array(array)],
+      {type: mimeString}
+    );
+  };
+
+  return {
+    element     : function(){return element;},
+    enable      : enable,
+    hasImage    : hasImage,
+    init        : init,
+    isSupported : isSupported,
+    reset       : reset,
+    takePicture : takePicture,
+    uriToBlob   : uriToBlob
+  }
+}
