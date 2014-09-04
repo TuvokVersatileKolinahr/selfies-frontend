@@ -33,9 +33,6 @@ body, textarea{
   font-size: 3em;
   margin-bottom: 20px;
 }
-.left-panel .button.show-add{
-
-}
 html, body, .wrapper, .wrapper .left, .wrapper .right{
   height: 100%;
   overflow: hidden;
@@ -245,11 +242,9 @@ section.add .group.buttons{
 .cancel:hover{
   color: #6B0705;
 }
-
 .hidden {
   display: none;
 }
-
 .clearfix:after {
   clear: both;
   content: ".";
@@ -258,8 +253,6 @@ section.add .group.buttons{
   line-height: 0;
   visibility: hidden;
 }
-
-
 .center{
 	text-align: center;
 }
