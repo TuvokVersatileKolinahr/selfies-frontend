@@ -60,6 +60,7 @@ html, body, .wrapper, .wrapper .left, .wrapper .right{
   background: rgba(66,19,9, .5);
   overflow-y: scroll;
   right: 0;
+  text-align: center;
 }
 .wrapper.open-sesame .left{
   left: -300px;
@@ -68,10 +69,11 @@ html, body, .wrapper, .wrapper .left, .wrapper .right{
   right: -300px;
 }
 .selfie{
-  float: right;
+  display: inline-block;
   height: 260px;
   margin: 5px;
   position: relative;
+  text-align: left;
   width: 200px;
 }
 .selfie .back, .selfie .front {
@@ -168,7 +170,6 @@ section.add .step1, section.add .step2{
   position: absolute;
   top: 50%;
   transform: translateX(-50%) translateY(-50%);
-  qvisibility: hidden;
 }
 .open-sesame section.add .step1.active, .open-sesame section.add .step2.active{
   visibility: visible;
