@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function () {
         webcam = new Webcam('#mugshot');
       }
       if (webcam.isSupported()) {
-        webcam.enable({video: true, audio: false}, function(stream) {
+        webcam.start({video: true, audio: false}, function(stream) {
           rAddWizard.set('initialized', true);
         }, function(e) {
           rAddWizard.set('error', 'Please share your webcam to enable taking your selfie');
@@ -88,7 +88,6 @@ document.addEventListener('DOMContentLoaded', function () {
     selfieimg.classList.add('hidden');
     selfieimg.src = '';
     document.getElementById('mugshot').classList.remove('hidden');
-    webcam.reset();
 
     this.set('hasSelfie', false);
   });
@@ -104,7 +103,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     this.set('hasSelfie', false);
     this.set('step', 'step1');
-    
+
     webcam.element().classList.remove('hidden');
     document.getElementById('selfie').classList.add('hidden');
     document.getElementById('selfie').attributes.src = '';

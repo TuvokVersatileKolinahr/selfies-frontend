@@ -31,12 +31,13 @@ var Webcam = function(selector){
     return !!navigator.getUserMedia
   }, 
   /**
-   * Enables the webcam, will ask the user to share his webcam
+   * Start the webcam, will ask the user to share his webcam
    * @param object options for the UserMedia for audio and video eg. {video: true, audio: true}
    * @param function the main success function
    * @param function the failure function
    */
-  enable = function(options, fnSuccess, fnFailure){
+  start = function(options, fnSuccess, fnFailure){
+    element.play();
     navigator.getUserMedia(options||{}, function(stream){
       element.src = window.URL.createObjectURL(stream);
       // copy stream to global
@@ -50,7 +51,7 @@ var Webcam = function(selector){
    * Checks whether the webcam is enabled
    * @return boolean
    */
-  isEnabled = function(){
+  isStarted = function(){
     return !!videoStream;
   },
   /**
@@ -83,8 +84,12 @@ var Webcam = function(selector){
   /**
    * Resets the Webcam object and deletes any pictures taken
    */
-  reset = function(){
+  stop = function(){
     videoStream = null;
+    element.pause();
+    element.src='';
+    // element.mozSrcObject=null;
+    // element.removeAttribute("src");
   }, 
   /**
    * Takes in a dataUri and transforms it into a Blob
@@ -122,10 +127,10 @@ var Webcam = function(selector){
 
   return {
     element     : function(){return element;},
-    enable      : enable,
-    isEnabled   : isEnabled,
+    isStarted   : isStarted,
     isSupported : isSupported,
-    reset       : reset,
+    start       : start,
+    stop        : stop,
     takePicture : takePicture,
     uriToBlob   : uriToBlob
   }
