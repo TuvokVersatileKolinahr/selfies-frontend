@@ -49,7 +49,6 @@ document.addEventListener('DOMContentLoaded', function () {
   rAddWizard.on('initialize',function(){
       if (!webcam){
         webcam = new Webcam('#mugshot');
-        webcam.init();
       }
       if (webcam.isSupported()) {
         webcam.enable({video: true, audio: false}, function(stream) {
@@ -138,10 +137,6 @@ document.addEventListener('DOMContentLoaded', function () {
       this.set('error', 'Field title can only contain 27 chars');
     }
 
-    if (!webcam.hasImage){
-      this.set('error', 'No selfie image present');
-    }
-
     if (!this.get('error')){
       var selfieblob = webcam.uriToBlob(document.querySelector('#selfie').src);
 
@@ -182,90 +177,3 @@ document.addEventListener('DOMContentLoaded', function () {
       
     }, false);
 });
-
-
-/**
- * make use of the webcam
- */
-var Webcam = function(selector){
-  /** The image stream  */
-  var imageStream,
-  element = document.querySelector(selector),
-  init = function(){
-    navigator.getUserMedia = navigator.getUserMedia ||
-      navigator.webkitGetUserMedia ||
-      navigator.mozGetUserMedia ||
-      navigator.msGetUserMedia;
-  }, isSupported = function(){
-    return !!navigator.getUserMedia
-  }, enable = function(options, fnSuccess, fnFailure){
-    navigator.getUserMedia(options||{}, function(stream){
-      element.src = window.URL.createObjectURL(stream);
-      // copy stream to global
-      element.onloadedmetadata = function(e) {
-        imageStream = stream;
-      };
-      fnSuccess(stream);
-    }, fnFailure||function(){});
-  }, hasImage = function(){
-    return !!window.imageStream;
-  }, takePicture = function(fnDrawImage){
-    var canvas = document.getElementById("webcamCanvas"); 
-    if (!canvas){
-      canvas = document.createElement('canvas');
-      canvas.id = "webcamCanvas";
-      canvas.style.display="none";
-      document.body.appendChild(canvas);
-      // make same size as video
-      canvas.width  = element.getBoundingClientRect().width;
-      canvas.height = element.getBoundingClientRect().height;
-    }
-    var ctx = canvas.getContext('2d');
-    if (fnDrawImage){
-      fnDrawImage(ctx, canvas);
-    }
-    else{
-      ctx.drawImage(element, 0, 0);
-    }
-
-    return canvas.toDataURL('image/png');
-  }, reset = function(){
-    imageStream = null;
-  }, uriToBlob = function(dataURI) {
-    // serialize the base64/URLEncoded data
-    var byteString;
-    if (dataURI.split(',')[0].indexOf('base64') >= 0) {
-      byteString = atob(dataURI.split(',')[1]);
-    }
-    else {
-      byteString = unescape(dataURI.split(',')[1]);
-    }
-    if (!byteString){
-      throw "Unable to fetch data from dataUri";
-    }
-
-    // parse the mime type
-    var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0]
-
-    // construct a Blob of the image data
-    var array = [];
-    for(var i = 0; i < byteString.length; i++) {
-      array.push(byteString.charCodeAt(i));
-    }
-    return new Blob(
-      [new Uint8Array(array)],
-      {type: mimeString}
-    );
-  };
-
-  return {
-    element     : function(){return element;},
-    enable      : enable,
-    hasImage    : hasImage,
-    init        : init,
-    isSupported : isSupported,
-    reset       : reset,
-    takePicture : takePicture,
-    uriToBlob   : uriToBlob
-  }
-}
