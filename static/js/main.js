@@ -47,7 +47,14 @@ document.addEventListener('DOMContentLoaded', function () {
     rSelfies.set(keypath, !rSelfies.get(keypath)); // toggle
   });
   rSelfies.on('activate', function(arg){
-    
+    this.get('selfies').forEach(function(e, i){
+      if (e !== arg.context && e.active === true){ /// but not for this one...
+        e.active = false;
+        e.flipped = false;
+      }
+    });
+    rSelfies.update();
+    this.set(arg.keypath+'.active', true);
   });
   // initialize the Add Wizard 
   rAddWizard.on('initialize',function(){

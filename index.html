@@ -28,7 +28,7 @@
 		<script id="selfiestpl" type="text/ractive">
 		  {{#each selfies}}
 		    {{#isActive}} {{!show only active selfies}}
-		  	<div class="selfie {{#flipped}}flipped{{/flipped}}" on-dblclick="flip" on-tap="activate">
+		  	<div class="selfie {{#flipped}}flipped{{/flipped}} {{#active}}active{{/active}}" on-dblclick="flip" on-tap="activate">
 		  		<div class="back">
 		  			<h2 class="handle"></h2>
 		  			<p class="about">{{about}}</p>
