@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function () {
         return selfie.picture + "?" + selfie._id;
       }
     }
-    }),
+  }),
   rAddWizard = new Ractive({
     el: '#addSelfie',
     template: '#addWizardtpl',
@@ -39,11 +39,15 @@ document.addEventListener('DOMContentLoaded', function () {
       rSelfies.set('selfies', data);
     }
   });
-
   // Flip a selfie when clicked on it
   rSelfies.on('flip', function(arg){
     arg.original.preventDefault();
-    arg.node.classList.toggle('flipped');
+
+    var keypath = arg.keypath+'.flipped';
+    rSelfies.set(keypath, !rSelfies.get(keypath)); // toggle
+  });
+  rSelfies.on('activate', function(arg){
+    
   });
   // initialize the Add Wizard 
   rAddWizard.on('initialize',function(){

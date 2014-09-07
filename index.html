@@ -28,14 +28,20 @@
 		<script id="selfiestpl" type="text/ractive">
 		  {{#each selfies}}
 		    {{#isActive}} {{!show only active selfies}}
-		  	<div class="selfie" on-tap="flip">
+		  	<div class="selfie {{#flipped}}flipped{{/flipped}}" on-dblclick="flip" on-tap="activate">
 		  		<div class="back">
 		  			<h2 class="handle"></h2>
 		  			<p class="about">{{about}}</p>
+		  			<div class="bottom">
+		  				<a href="#" class="rotate" on-tap="flip" title="Flip selfie"></a>
+		  			</div>
 		  		</div>
 		  		<div class="front">
 		  			<h2 class="handle">{{name}}</h2>
 		  			<img src="{{getSrc(this)}}" alt="Selfie {{name}}" />
+		  			<div class="bottom">
+		  				<a href="#" class="rotate" on-tap="flip" title="Flip selfie"></a>
+		  			</div>
 		  		</div>
 		  	</div>
 		  	{{/isActive}}

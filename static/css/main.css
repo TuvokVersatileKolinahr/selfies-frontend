@@ -19,7 +19,8 @@ img{max-width:100%;}
     font-family: "Open Sans";
     src: local("Open Sans Light"), local("OpenSans-Light"), url("fonts/OpenSans-Light.woff") format("woff");
 }
-body, textarea{
+body, textarea, select{
+  color: #333;
 	font: 1em "Open Sans",Helvetica,Arial,sans-serif;
 }
 .left-panel{
@@ -90,7 +91,7 @@ html, body, .wrapper, .wrapper .left, .wrapper .right{
           transition: .7s ease-in-out;
 }
 .selfie .back {
-  padding: 0 10px;
+  z-index: 20;
   -webkit-backface-visibility: hidden;
      -moz-backface-visibility: hidden;
           backface-visibility: hidden;
@@ -100,19 +101,13 @@ html, body, .wrapper, .wrapper .left, .wrapper .right{
 }
 .selfie .front {
   text-align: center;
+  z-index: 10;
   -webkit-backface-visibility: visible;
      -moz-backface-visibility: visible;
           backface-visibility: visible;
   -webkit-transform: perspective(800px) rotateY(0deg);
      -moz-transform: perspective(800px) rotateY(0deg);
           transform: perspective(800px) rotateY(0deg);
-}
-.selfie .front img {
-  border: 1px solid #fff;
-  border-radius: 50%;
-  box-shadow: 0 0 3px 2px rgba(255, 255, 255, 0.8);
-  margin-top: 20px;
-  width: 175px;
 }
 .selfie h2{
   background: #fff;
@@ -124,11 +119,41 @@ html, body, .wrapper, .wrapper .left, .wrapper .right{
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-.selfie .handle{
-  cursor: pointer;
+.selfie .front img {
+  border: 1px solid #fff;
+  box-shadow: 0 0 3px 2px rgba(255, 255, 255, 0.8);
+  margin-top: 20px;
+  width: 150px;
+}
+.selfie .bottom{
+  height: 35px;
+  margin: 3px 5px;
+  opacity: .4;
+  text-align: right;
+}
+.selfie .front .bottom{
+  opacity: 0;
+  transition: opacity .15s ease-in-out 0s;
+}
+.selfie .front:hover .bottom{
+  opacity: .6;
+}
+.selfie .bottom .rotate{
+  background: transparent url(img/rotate.png) no-repeat center center;
+  background-size: 11px;
+  border: 2px solid #222222;
+  border-radius: 50%;
+  display: inline-block;
+  height: 20px;
+  width: 20px;
 }
 .selfie .back .handle{
   opacity: 0;
+  padding: 0 10px;
+}
+.selfie .back .about{
+  height: 176px;
+  padding: 0 10px;
 }
 .selfie.flipped .back {
   background: rgba(255,255,255,.6);
@@ -142,7 +167,6 @@ html, body, .wrapper, .wrapper .left, .wrapper .right{
      -moz-transform: perspective(800px) rotateY(-179.9deg);
           transform: perspective(800px) rotateY(-179.9deg);
 }
-
 
 .error {
     background: none repeat scroll 0 0 #fff;
