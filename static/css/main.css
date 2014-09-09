@@ -298,3 +298,60 @@ section.add .group.buttons{
 .center{
 	text-align: center;
 }
+
+
+@media (max-width: 3200px) {
+
+  html, body, .wrapper, .wrapper .left, .wrapper .right{
+    height: auto;
+    overflow: auto;
+  }
+  .wrapper .left, .wrapper .right{
+    position: static;
+    overflow: hidden;
+    width: 100%;
+  }
+  .wrapper .left{
+    height: 480px;
+  }
+  .left-panel{
+    margin-top: 50px;
+    top: 0;
+    transform: none;
+  }
+  .open-sesame section.add {
+      background: rgba(255, 255, 255, 0.6);
+      height: 100%;
+      left: 0;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 10;
+  }
+  section.add .step1, section.add .step2{
+    top: 0;
+    left: 0;
+    position: static;
+    transform:none;
+    z-index: 999;
+  }
+  section.add .container{
+    width: 100%;
+  }
+  section.add video{
+    width: auto;
+    max-width: 100%;
+  }
+  section.add .group.buttons{
+    position: fixed;
+    width: 100%;
+  }
+  #selfie{
+    width: 250px;
+  }
+
+  .selfie .front .bottom{
+    opacity: 1;
+  }
+
+}
