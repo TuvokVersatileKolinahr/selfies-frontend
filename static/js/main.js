@@ -10,7 +10,7 @@
  */
 document.addEventListener('DOMContentLoaded', function () {
 
-  var rest = new Rest('http://selfies.tuvok.nl/api'),
+  var rest = new Rest('/api'),
   webcam,
   rSelfies = new Ractive({
     el: '#selfies',
