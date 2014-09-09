@@ -61,35 +61,43 @@ document.addEventListener('DOMContentLoaded', function () {
       if (!webcam){
         webcam = new Webcam('#mugshot');
       }
+
       if (webcam.isSupported()) {
         webcam.start({video: true, audio: false}, function(stream) {
           rAddWizard.set('initialized', true);
         }, function(e) {
           rAddWizard.set('error', 'Please share your webcam to enable taking your selfie');
         });
-      } else {
-        this.set('error', 'Taking a picture with your webcam is not supported by the browser');
+      } 
+      else {
+        if (window.navigator.userAgent.match(/Mobi/)){ // mobile browser...
+          webcam.useFallback(true);
+        }
+        else{
+          alert('API is not supported by your browser');
+        }
       }
   });
   rAddWizard.on('take-selfie',function(arg){
     arg.original.preventDefault();
 
-    if (webcam.isSupported()) {
-      var selfieimg = document.querySelector('#selfie');
-      selfieimg.src = webcam.takePicture(function(ctx, canvas){
-       
-        var min = Math.min(canvas.width,canvas.height);
-        var max = Math.max(canvas.width,canvas.height);
-         canvas.width = min;
-        canvas.height = min;
-        ctx.drawImage(webcam.element(), (max-min)/2, 0, min,min, 0,0,min,min);
+    if (webcam.isStarted()) {
+      
+        webcam.takePicture(function(dataUri){
 
-       
-      });
+          webcam.element().classList.add('hidden');
+          var selfieimg = document.querySelector('#selfie');
+          selfieimg.src=dataUri;
+          selfieimg.classList.remove('hidden');
+          rAddWizard.set('hasSelfie', true);
 
-      webcam.element().classList.add('hidden');
-      selfieimg.classList.remove('hidden');
-      this.set('hasSelfie', true);
+        }, function(ctx, canvas){
+          var min = Math.min(canvas.width,canvas.height);
+          var max = Math.max(canvas.width,canvas.height);
+          canvas.width = min;
+          canvas.height = min;
+          ctx.drawImage(webcam.element(), (max-min)/2, 0, min,min, 0,0,min,min);
+        });
     }
   });
   rAddWizard.on('retake-selfie',function(arg){
