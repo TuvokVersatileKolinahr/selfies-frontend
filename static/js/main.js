@@ -33,10 +33,10 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
   // get all selfies
-  rest.get('/selfies/16', {
+  rest.get('/selfies?limit=16', {
     success: function(data, status, xhr){
-      console.info('Got ' + data.length + ' selfies!');
-      rSelfies.set('selfies', data);
+      console.info('Got ' + data.selfies.length + ' selfies!');
+      rSelfies.set('selfies', data.selfies);
     }
   });
   // Flip a selfie when clicked on it
