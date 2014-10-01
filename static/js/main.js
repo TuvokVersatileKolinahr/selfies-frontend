@@ -159,7 +159,7 @@ document.addEventListener('DOMContentLoaded', function () {
         success: function(response, status, xhr){
           var selfies = rSelfies.get('selfies');
           selfies.reverse();
-          selfies.push(response.data);
+          selfies.push(response.selfies);
           selfies.reverse();
 
           rAddWizard.fire('cancel');
