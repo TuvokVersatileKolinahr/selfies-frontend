@@ -275,6 +275,9 @@ section.add .group.buttons{
 .button.large{
   font-size: 2em;
 }
+.button.small{
+  font-size: .8em;
+}
 .cancel{
   color: #4c180d;
   font-size: 1.2em;
@@ -283,6 +286,26 @@ section.add .group.buttons{
 }
 .cancel:hover{
   color: #6B0705;
+}
+.modal-overlay{
+  background: none repeat scroll 0 0 rgba(224, 224, 224, 0.8);
+  cursor: progress;
+  visibility: hidden;
+  height: 100%;
+  left: 0;
+  opacity: 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: -1;
+  -webkit-transition: opacity 0.5s;
+     -moz-transition: opacity 0.5s;
+          transition: opacity 0.5s;
+}
+.modal-overlay.show{
+  opacity: 1;
+  visibility: visible;
+  z-index: 1000;
 }
 .hidden {
   display: none;
@@ -297,4 +320,7 @@ section.add .group.buttons{
 }
 .center{
 	text-align: center;
+}
+.fl{
+  float: left;
 }

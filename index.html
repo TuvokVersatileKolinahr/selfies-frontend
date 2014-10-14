@@ -13,7 +13,6 @@
 	<div class="wrapper">
 
 		<section class="left">
-
 			<div class="left-panel"> 
 				<h1 class="title">Say it with a Selfie</h1>
 
@@ -23,6 +22,7 @@
 		<section id="selfies" class="right clearfix"></section>
 
 		<section id="addSelfie" class="add"></section>
+		<section id="prominent" class="add"></section>
 	</div>
 
 		<script id="selfiestpl" type="text/ractive">
@@ -40,12 +40,18 @@
 		  			<h2 class="handle">{{name}}</h2>
 		  			<img src="{{getSrc(this)}}" alt="Selfie {{name}}" />
 		  			<div class="bottom">
+		  				<a href="#" class="button small fl" on-tap="react" title="react">React</a>
 		  				<a href="#" class="rotate" on-tap="flip" title="Flip selfie"></a>
 		  			</div>
 		  		</div>
 		  	</div>
 		  	{{/isActive}}
 		  {{/each}}
+		</script>
+
+		<script id="prominentSelfie" type="text/ractive">
+			<div class="modal-overlay {{#selfie._id}}show{{/selfie}}"></div>
+
 		</script>
 
 		<script id="addWizardtpl" type="text/ractive">

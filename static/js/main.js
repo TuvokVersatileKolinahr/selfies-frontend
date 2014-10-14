@@ -10,18 +10,41 @@
  */
 document.addEventListener('DOMContentLoaded', function () {
 
-  var rest = new Rest('/api'),
+  var rest = new Rest('http://selfies.tuvok.nl/api'),
   webcam,
   rSelfies = new Ractive({
     el: '#selfies',
     template: '#selfiestpl',
     data: { 
       selfies: [], // init with empty array
+      prominent: null,
       getSrc: function(selfie){
         return selfie.picture + "?" + selfie._id;
       }
     }
   }),
+  rProminent = new Ractive({
+    el: '#prominent',
+    template: '#prominentSelfie',
+    data: {
+      selfie:{}
+    }
+  });
+
+  rSelfies.on('react', function(arg){
+    arg.original.stopPropagation();
+
+    var keypath = arg.keypath+'.flipped';
+    this.set(arg.keypath+'.active', true);
+
+    // get selfie
+    rest.get('/selfies/'+arg.context._id, {
+      success: function(data, status, xhr){
+        rProminent.set('selfie', data.selfies);
+      }
+    });
+  });
+
   rAddWizard = new Ractive({
     el: '#addSelfie',
     template: '#addWizardtpl',
@@ -41,7 +64,6 @@ document.addEventListener('DOMContentLoaded', function () {
   });
   // Flip a selfie when clicked on it
   rSelfies.on('flip', function(arg){
-    arg.original.preventDefault();
     arg.original.stopPropagation();
 
     var keypath = arg.keypath+'.flipped';
@@ -174,6 +196,8 @@ document.addEventListener('DOMContentLoaded', function () {
       });
     }
   });
+
+  
 
   document.querySelector('.show-add').addEventListener('mousedown', function(e){
     document.querySelector('.wrapper').classList.toggle('open-sesame');
