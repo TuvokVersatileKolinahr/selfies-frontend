@@ -42,6 +42,7 @@ document.addEventListener('DOMContentLoaded', function () {
   // Flip a selfie when clicked on it
   rSelfies.on('flip', function(arg){
     arg.original.preventDefault();
+    arg.original.stopPropagation();
 
     var keypath = arg.keypath+'.flipped';
     rSelfies.set(keypath, !rSelfies.get(keypath)); // toggle
@@ -54,7 +55,7 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     });
     rSelfies.update();
-    this.set(arg.keypath+'.active', true);
+    this.set(arg.keypath+'.active', !this.get(arg.keypath+'.active'));
   });
   // initialize the Add Wizard 
   rAddWizard.on('initialize',function(){
