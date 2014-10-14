@@ -30,6 +30,9 @@ document.addEventListener('DOMContentLoaded', function () {
       selfie:{}
     }
   });
+  rProminent.on('close', function(arg){
+    this.set('selfie', null);
+  });
 
   rSelfies.on('react', function(arg){
     arg.original.stopPropagation();

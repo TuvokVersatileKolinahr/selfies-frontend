@@ -22,7 +22,7 @@
 		<section id="selfies" class="right clearfix"></section>
 
 		<section id="addSelfie" class="add"></section>
-		<section id="prominent" class="add"></section>
+		<section id="prominent"></section>
 	</div>
 
 		<script id="selfiestpl" type="text/ractive">
@@ -50,8 +50,15 @@
 		</script>
 
 		<script id="prominentSelfie" type="text/ractive">
-			<div class="modal-overlay {{#selfie._id}}show{{/selfie}}"></div>
-
+			{{#selfie._id}}
+			<div class="modal-overlay {{#selfie._id}}show{{/selfie}}" on-tap="close"></div>
+			<div class="selfie">
+		  		<div class="front">
+		  			<h2 class="handle">{{selfie.name}}</h2>
+		  			<img src="{{selfie.picture}}" alt="Selfie" />
+		  		</div>
+			</div>
+			{{/selfie}}
 		</script>
 
 		<script id="addWizardtpl" type="text/ractive">

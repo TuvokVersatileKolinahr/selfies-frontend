@@ -70,6 +70,19 @@ html, body, .wrapper, .wrapper .left, .wrapper .right{
 .wrapper.open-sesame .right{
   right: -300px;
 }
+#prominent .selfie{
+  height: auto; 
+  left: 50%;
+  transform: translateX(-50%);
+  width: 400px;
+  z-index: 1001;
+}
+#prominent .selfie img{
+  width: 99%;
+}
+#prominent .selfie .front img{
+  margin-top: 0;
+}
 .selfie{
   display: inline-block;
   height: 260px;
