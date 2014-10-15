@@ -10,7 +10,8 @@
  */
 document.addEventListener('DOMContentLoaded', function () {
 
-  var rest = new Rest('http://selfies.tuvok.nl/api'),
+  var url = (window.location.href.match(/localhost/) ? 'http://selfies.tuvok.nl' : "") + '/api',
+  rest = new Rest(url),
   webcam,
   rSelfies = new Ractive({
     el: '#selfies',
