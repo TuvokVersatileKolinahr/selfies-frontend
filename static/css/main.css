@@ -291,6 +291,14 @@ section.add .group.buttons{
 .button.small{
   font-size: .8em;
 }
+.button.disabled{
+  color: inherit;
+  opacity: .4;
+  cursor: default;
+}
+.button.disabled:hover{
+  border-color: inherit;
+}
 .cancel{
   color: #4c180d;
   font-size: 1.2em;

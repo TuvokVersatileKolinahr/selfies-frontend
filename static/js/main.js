@@ -101,6 +101,10 @@ document.addEventListener('DOMContentLoaded', function () {
   rAddWizard.on('take-selfie',function(arg){
     arg.original.preventDefault();
 
+    if (!rAddWizard.get('initialized')){
+      return;
+    }
+
     if (webcam.isSupported()) {
       var selfieimg = document.querySelector('#selfie');
       webcam.takePicture(function(pic){
@@ -143,6 +147,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     webcam.element().classList.remove('hidden');
     webcam.stop();
+    rAddWizard.set('initialized', false);
     document.getElementById('selfie').classList.add('hidden');
     document.getElementById('selfie').attributes.src = '';
 
