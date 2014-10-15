@@ -102,20 +102,19 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (webcam.isSupported()) {
       var selfieimg = document.querySelector('#selfie');
-      selfieimg.src = webcam.takePicture(function(ctx, canvas){
-       
-        var min = Math.min(canvas.width,canvas.height);
-        var max = Math.max(canvas.width,canvas.height);
-         canvas.width = min;
-        canvas.height = min;
-        ctx.drawImage(webcam.element(), (max-min)/2, 0, min,min, 0,0,min,min);
-
-       
+      webcam.takePicture(function(pic){
+          selfieimg.src = pic;
+          selfieimg.classList.remove('hidden');
+          webcam.element().classList.add('hidden');
+          rAddWizard.set('hasSelfie', true);
+        },
+        function(ctx, canvas){
+          var min = Math.min(canvas.width,canvas.height);
+          var max = Math.max(canvas.width,canvas.height);
+          canvas.width = min;
+          canvas.height = min;
+          ctx.drawImage(webcam.element(), (max-min)/2, 0, min,min, 0,0,min,min);
       });
-
-      webcam.element().classList.add('hidden');
-      selfieimg.classList.remove('hidden');
-      this.set('hasSelfie', true);
     }
   });
   rAddWizard.on('retake-selfie',function(arg){
@@ -142,6 +141,7 @@ document.addEventListener('DOMContentLoaded', function () {
     this.set('step', 'step1');
 
     webcam.element().classList.remove('hidden');
+    webcam.stop();
     document.getElementById('selfie').classList.add('hidden');
     document.getElementById('selfie').attributes.src = '';
 
@@ -205,9 +205,7 @@ document.addEventListener('DOMContentLoaded', function () {
   document.querySelector('.show-add').addEventListener('mousedown', function(e){
     document.querySelector('.wrapper').classList.toggle('open-sesame');
     if ( document.querySelector('.wrapper').classList.contains('open-sesame')){
-      if (!rAddWizard.get('initialized')){
         rAddWizard.fire('initialize');
-      };
     } 
     else{
       rAddWizard.fire('cancel');

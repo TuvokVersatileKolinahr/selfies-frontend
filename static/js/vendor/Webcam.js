@@ -159,7 +159,7 @@ var Webcam = function(selector){
   /**
    * Take a still image of the webcam
    * @param function the success function, with the dataURI as a parameter
-   * @param function callback mechnism to influence drawing a new image. If omitted, then a copy will be made of the webcam image
+   * @param function callback mechanism to influence drawing a new image. If omitted, then a copy will be made of the webcam image
    */
   takePicture = function(fnSuccess, fnDrawImage){
     if(isSupported()){
